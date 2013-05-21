@@ -5,7 +5,7 @@
   Plugin URI: http://wp.tekapo.com/
   Description: Show the current template file name in the tool bar.
   Author: JOTAKI Taisuke
-  Version: 0.1.1
+  Version: 0.1.2
   Author URI: http://tekapo.com/
   Text Domain: show-current-template
   Domain Path: /languages/
@@ -36,7 +36,7 @@ load_plugin_textdomain( Show_Template_File_Name::TEXT_DOMAIN, false, dirname( pl
 new Show_Template_File_Name();
 
 class Show_Template_File_Name {
-	const TEXT_DOMAIN = 'sct9';
+	const TEXT_DOMAIN = 'show-current-template';
 
 	function __construct() {
 		add_action( "admin_bar_menu", array( &$this, "show_template_file_name_on_top" ), 9999 );

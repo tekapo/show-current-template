@@ -1,10 +1,10 @@
 === Show Current Template ===
 Contributors: tai
 Donate link: 
-Tags: 
+Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ http://wordpress.org/plugins/reveal-template/
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 0.1.2 =
+* FIXED: Fixed potential conflict text domain (https://github.com/tekapo/show-current-template/pull/1).
+  Thanks to @wokamoto san.
 
 = 0.1.1 =
 * UPDATED: readme.txt
