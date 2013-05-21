@@ -1,0 +1,39 @@
+=== Show Current Template ===
+Contributors: tai
+Donate link: 
+Tags: 
+Requires at least: 3.5
+Tested up to: 3.5.1
+Stable tag: 0.1.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+
+== Description ==
+A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar.
+
+Inspired by (and big thanks to):
+https://gist.github.com/gatespace/4482529
+http://wordpress.org/plugins/reveal-template/
+
+
+== Installation ==
+
+= The Good Way =
+
+1. In your WordPress Admin, go to the Add New Plugins page
+1. Search for: Show Current Template
+1. Show Current Template should be the first result. Click the Install link.
+
+= The Old Way =
+
+1. Upload the plugin to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+
+== Changelog ==
+
+= 0.1.1 =
+* UPDATED: readme.txt
+
+= 0.1.0 =
+* Initial release
