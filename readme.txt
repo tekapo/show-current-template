@@ -30,6 +30,18 @@ http://wordpress.org/plugins/reveal-template/
 1. Upload the plugin to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
+== Frequently Asked Questions ==
+
+None so far.
+
+== Screenshots ==
+
+Not yet.
+
+== Upgrade Notice ==
+
+None so far.
+
 == Changelog ==
 
 = 0.1.2 =
