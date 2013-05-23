@@ -37,7 +37,7 @@ None so far.
 
 == Screenshots ==
 
-Not yet.
+1. Shows the current template file.
 
 == Upgrade Notice ==
 
