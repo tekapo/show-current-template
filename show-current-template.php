@@ -1,11 +1,10 @@
 <?php
-
 /*
   Plugin Name: Show Current Template
   Plugin URI: http://wp.tekapo.com/
   Description: Show the current template file name in the tool bar.
   Author: JOTAKI Taisuke
-  Version: 0.1.2
+  Version: 0.1.3
   Author URI: http://tekapo.com/
   Text Domain: show-current-template
   Domain Path: /languages/
@@ -36,6 +35,7 @@ load_plugin_textdomain( Show_Template_File_Name::TEXT_DOMAIN, false, dirname( pl
 new Show_Template_File_Name();
 
 class Show_Template_File_Name {
+
 	const TEXT_DOMAIN = 'show-current-template';
 
 	function __construct() {
@@ -55,7 +55,9 @@ class Show_Template_File_Name {
 
 		$current_theme		 = wp_get_theme();
 		$current_theme_name	 = $current_theme->Name;
-		$parent_theme_name	 = $current_theme->parent()->Name;
+		if ( !empty( $current_theme->parent()->Name ) ) {
+			$parent_theme_name = $current_theme->parent()->Name;
+		}
 
 		if ( is_child_theme() ) {
 			$child_theme_name	 = __( 'Theme name: ', self::TEXT_DOMAIN ) . $current_theme_name;
@@ -68,6 +70,7 @@ class Show_Template_File_Name {
 		$included_files = get_included_files();
 
 		sort( $included_files );
+		$included_files_list = '';
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
 				$filepath = strstr( $filename, 'themes' );

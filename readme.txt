@@ -4,7 +4,7 @@ Donate link:
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,8 +13,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar.
 
 Inspired by (and big thanks to):
-https://gist.github.com/gatespace/4482529
-http://wordpress.org/plugins/reveal-template/
+
+* https://gist.github.com/gatespace/4482529
+* http://wordpress.org/plugins/reveal-template/
 
 
 == Installation ==
@@ -36,13 +37,17 @@ None so far.
 
 == Screenshots ==
 
-Not yet.
+1. Shows the current template file.
 
 == Upgrade Notice ==
 
 None so far.
 
 == Changelog ==
+
+= 0.1.3 =
+
+* FIXED: Fixed some notices.
 
 = 0.1.2 =
 * FIXED: Fixed potential conflict text domain (https://github.com/tekapo/show-current-template/pull/1).
