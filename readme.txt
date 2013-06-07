@@ -45,6 +45,10 @@ None so far.
 
 == Changelog ==
 
+= 0.1.4 =
+
+* UPDATED: Make not to show the current file in the included files list.
+
 = 0.1.3 =
 
 * FIXED: Fixed some notices.

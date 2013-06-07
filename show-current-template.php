@@ -4,7 +4,7 @@
   Plugin URI: http://wp.tekapo.com/
   Description: Show the current template file name in the tool bar.
   Author: JOTAKI Taisuke
-  Version: 0.1.3
+  Version: 0.1.4
   Author URI: http://tekapo.com/
   Text Domain: show-current-template
   Domain Path: /languages/
@@ -74,7 +74,11 @@ class Show_Template_File_Name {
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
 				$filepath = strstr( $filename, 'themes' );
+				if ( $template_relative_path == $filepath) {
+				$included_files_list .= '';
+				}  else {
 				$included_files_list .= "$filepath <br />\n";
+				}
 			}
 		}
 
