@@ -45,12 +45,13 @@ None so far.
 
 == Changelog ==
 
-= 0.1.4 =
+= 0.1.5 =
+* FIXED: Fixed the issue of not displaying the parent theme name when using a child theme.
 
+= 0.1.4 =
 * UPDATED: Make not to show the current file in the included files list.
 
 = 0.1.3 =
-
 * FIXED: Fixed some notices.
 
 = 0.1.2 =

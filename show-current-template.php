@@ -55,12 +55,11 @@ class Show_Template_File_Name {
 
 		$current_theme		 = wp_get_theme();
 		$current_theme_name	 = $current_theme->Name;
-		if ( !empty( $current_theme->parent()->Name ) ) {
-			$parent_theme_name = $current_theme->parent()->Name;
-		}
+		$parent_theme_name	 = '';
 
 		if ( is_child_theme() ) {
 			$child_theme_name	 = __( 'Theme name: ', self::TEXT_DOMAIN ) . $current_theme_name;
+			$parent_theme_name	 = $current_theme->parent()->Name;
 			$parent_theme_name	 = ' (' . $parent_theme_name . __( "'s child", self::TEXT_DOMAIN ) . ")";
 			$parent_or_child	 = $child_theme_name . $parent_theme_name;
 		} else {
@@ -74,10 +73,10 @@ class Show_Template_File_Name {
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
 				$filepath = strstr( $filename, 'themes' );
-				if ( $template_relative_path == $filepath) {
-				$included_files_list .= '';
-				}  else {
-				$included_files_list .= "$filepath <br />\n";
+				if ( $template_relative_path == $filepath ) {
+					$included_files_list .= '';
+				} else {
+					$included_files_list .= "$filepath <br />\n";
 				}
 			}
 		}
