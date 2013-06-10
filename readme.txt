@@ -4,7 +4,7 @@ Donate link:
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 0.1.3
+Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,8 +45,13 @@ None so far.
 
 == Changelog ==
 
-= 0.1.3 =
+= 0.1.5 =
+* FIXED: Fixed the issue of not displaying the parent theme name when using a child theme.
 
+= 0.1.4 =
+* UPDATED: Make not to show the current file in the included files list.
+
+= 0.1.3 =
 * FIXED: Fixed some notices.
 
 = 0.1.2 =
