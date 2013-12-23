@@ -30,7 +30,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-load_plugin_textdomain( Show_Template_File_Name::TEXT_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+load_plugin_textdomain( Show_Template_File_Name::TEXT_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) 
+		. '/languages/' );
 
 new Show_Template_File_Name();
 
@@ -63,7 +64,8 @@ class Show_Template_File_Name {
 			$parent_theme_name	 = ' (' . $parent_theme_name . __( "'s child", self::TEXT_DOMAIN ) . ")";
 			$parent_or_child	 = $child_theme_name . $parent_theme_name;
 		} else {
-			$parent_or_child = __( 'Theme name: ', self::TEXT_DOMAIN ) . $current_theme_name . ' (' . __( 'NOT a child theme', self::TEXT_DOMAIN ) . ')';
+			$parent_or_child = __( 'Theme name: ', self::TEXT_DOMAIN ) . $current_theme_name . ' (' 
+					. __( 'NOT a child theme', self::TEXT_DOMAIN ) . ')';
 		}
 
 		$included_files = get_included_files();
@@ -84,7 +86,8 @@ class Show_Template_File_Name {
 		global $wp_admin_bar;
 		$args = array(
 			'id'	 => 'show_template_file_name_on_top',
-			'title'	 => __( 'Template:', self::TEXT_DOMAIN ) . '<span class="show-template-name"> ' . $template_file_name . '</span>',
+			'title'	 => __( 'Template:', self::TEXT_DOMAIN ) . '<span class="show-template-name"> ' 
+			. $template_file_name . '</span>',
 		);
 
 		$wp_admin_bar->add_node( $args );
@@ -92,7 +95,8 @@ class Show_Template_File_Name {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'show_template_file_name_on_top',
 			'id'	 => 'template_relative_path',
-			'title'	 => __( 'Template relative path:', self::TEXT_DOMAIN ) . '<span class="show-template-name"> ' . $template_relative_path . '</span>',
+			'title'	 => __( 'Template relative path:', self::TEXT_DOMAIN ) . '<span class="show-template-name"> '
+			. $template_relative_path . '</span>',
 		) );
 
 		$wp_admin_bar->add_menu( array(
@@ -104,7 +108,8 @@ class Show_Template_File_Name {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'show_template_file_name_on_top',
 			'id'	 => 'included_files_path',
-			'title'	 => __( 'Also, below template files are included:', self::TEXT_DOMAIN ) . '<br /><div id="included-files-list">' . $included_files_list . '</div>',
+			'title'	 => __( 'Also, below template files are included:', self::TEXT_DOMAIN ) 
+			. '<br /><div id="included-files-list">' . $included_files_list . '</div>',
 		) );
 	}
 
