@@ -7,7 +7,7 @@ Tested up to: 3.8
 Stable tag: 0.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
+Version: 0.1.6
 
 == Description ==
 A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar.
