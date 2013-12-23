@@ -18,9 +18,13 @@
 	height: auto;
 }
 
-#wpadminbar .hover .show-template-name,
 #wpadminbar .quicklinks .menupop ul li#wp-admin-bar-included_files_path .ab-item div {
-	color: #333;
+	color: #fff;
+}
+
+#wpadminbar .hover .show-template-name:hover,
+#wpadminbar .quicklinks .menupop ul li#wp-admin-bar-included_files_path .ab-item #included-files-list li:hover {
+	color: #2ea2cc;
 }
 
 #included-files-list {
