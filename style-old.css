@@ -1,9 +1,10 @@
 /* 
     Document   : style.css
     Created on : 2013/01/21, 16:04:46
+    Updated on : 2014/01/26, 22:28
     Author     : tai
     Description:
-        Purpose of the stylesheet follows.
+        The stylesheet for the plugin.
 */
 
 #wpadminbar .show-template-name,
@@ -17,9 +18,13 @@
 	height: auto;
 }
 
-#wpadminbar .hover .show-template-name,
 #wpadminbar .quicklinks .menupop ul li#wp-admin-bar-included_files_path .ab-item div {
-	color: #333;
+	color: #fff;
+}
+
+#wpadminbar .hover .show-template-name:hover,
+#wpadminbar .quicklinks .menupop ul li#wp-admin-bar-included_files_path .ab-item #included-files-list li:hover {
+	color: #2ea2cc;
 }
 
 #included-files-list {
