@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : style.css
     Created on : 2013/01/21, 16:04:46
     Updated on : 2014/01/26, 22:28
@@ -9,7 +9,7 @@
 
 #wpadminbar .show-template-name,
 #wpadminbar .hover .show-template-name,
-#wpadminbar .quicklinks .menupop ul li#wp-admin-bar-included_files_path .ab-item div { 
+#wpadminbar .quicklinks .menupop ul li#wp-admin-bar-included_files_path .ab-item div {
 	font-family: monospace;
 	text-shadow: none;
 }
