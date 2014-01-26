@@ -5,7 +5,7 @@
   Plugin URI: http://wp.tekapo.com/
   Description: Show the current template file name in the tool bar.
   Author: JOTAKI Taisuke
-  Version: 0.1.9
+  Version: 0.2.0
   Author URI: http://tekapo.com/
   Text Domain: show-current-template
   Domain Path: /languages/
