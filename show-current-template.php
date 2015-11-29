@@ -31,13 +31,12 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-load_plugin_textdomain( Show_Template_File_Name::TEXT_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+load_plugin_textdomain( 'show-current-template',
+		false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 new Show_Template_File_Name();
 
 class Show_Template_File_Name {
-
-	const TEXT_DOMAIN = 'show-current-template';
 
 	function __construct() {
 		add_action( "admin_bar_menu", array( &$this, "show_template_file_name_on_top" ), 9999 );
@@ -60,14 +59,15 @@ class Show_Template_File_Name {
 		$parent_theme_name	 = '';
 
 		if ( is_child_theme() ) {
-			$child_theme_name	 = __( 'Theme name: ', self::TEXT_DOMAIN, 'show-current-template' )
+			$child_theme_name	 = __( 'Theme name: ', 'show-current-template' )
 					. $current_theme_name;
 			$parent_theme_name	 = $current_theme->parent()->Name;
-			$parent_theme_name	 = ' (' . $parent_theme_name . __( "'s child", self::TEXT_DOMAIN, 'show-current-template' ) . ")";
+			$parent_theme_name	 = ' (' . $parent_theme_name 
+					. __( "'s child", 'show-current-template' ) . ")";
 			$parent_or_child	 = $child_theme_name . $parent_theme_name;
 		} else {
-			$parent_or_child = __( 'Theme name: ', self::TEXT_DOMAIN, 'show-current-template' )
-					. $current_theme_name . ' (' . __( 'NOT a child theme', self::TEXT_DOMAIN, 'show-current-template' ) . ')';
+			$parent_or_child = __( 'Theme name: ', 'show-current-template' )
+					. $current_theme_name . ' (' . __( 'NOT a child theme', 'show-current-template' ) . ')';
 		}
 
 		$included_files = get_included_files();
@@ -88,7 +88,7 @@ class Show_Template_File_Name {
 		global $wp_admin_bar;
 		$args = array(
 			'id'	 => 'show_template_file_name_on_top',
-			'title'	 => __( 'Template:', self::TEXT_DOMAIN, 'show-current-template' )
+			'title'	 => __( 'Template:', 'show-current-template' )
 			. '<span class="show-template-name"> ' . $template_file_name . '</span>',
 		);
 
@@ -97,7 +97,7 @@ class Show_Template_File_Name {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'show_template_file_name_on_top',
 			'id'	 => 'template_relative_path',
-			'title'	 => __( 'Template relative path:', self::TEXT_DOMAIN, 'show-current-template' )
+			'title'	 => __( 'Template relative path:', 'show-current-template' )
 			. '<span class="show-template-name"> ' . $template_relative_path . '</span>',
 		) );
 
@@ -110,7 +110,7 @@ class Show_Template_File_Name {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'show_template_file_name_on_top',
 			'id'	 => 'included_files_path',
-			'title'	 => __( 'Also, below template files are included:', self::TEXT_DOMAIN
+			'title'	 => __( 'Also, below template files are included:'
 					, 'show-current-template' ) . '<br /><ul id="included-files-list">'
 			. $included_files_list . '</ul>',
 		) );
