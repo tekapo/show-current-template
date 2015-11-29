@@ -1,7 +1,7 @@
 /* 
     Document   : style.css
     Created on : 2013/01/21, 16:04:46
-    Updated on : 2014/01/26, 23:16
+    Updated on : 2015/11/29, 9:30
     Author     : tai
     Description:
     The stylesheet for the plugin.
@@ -16,6 +16,7 @@
 
 #wpadminbar #wp-admin-bar-included_files_path .ab-item {
 	height: auto;
+    padding-bottom: 1rem;
 }
 
 #wpadminbar #wp-admin-bar-included_files_path .ab-item div {
@@ -28,7 +29,7 @@
 }
 
 #wpadminbar #wp-admin-bar-included_files_path .ab-item #included-files-list li {
-	line-height: 1.3rem;
+    line-height: 1.3rem;
 }
 
 #wpadminbar #included-files-list {
