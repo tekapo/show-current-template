@@ -4,7 +4,7 @@ Donate link:
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 4.4
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ None so far.
 None so far.
 
 == Changelog ==
+
+= 0.2.2 =
+* Oops, too short.
 
 = 0.2.1 =
 * UPDATED: Make the height of included files names shorter
