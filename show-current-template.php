@@ -31,8 +31,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-load_plugin_textdomain( 'show-current-template',
-		false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 new Show_Template_File_Name();
 
@@ -45,10 +44,10 @@ class Show_Template_File_Name {
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
-		if ( is_admin() or !is_super_admin() ) {
+		if ( is_admin() or ! is_super_admin() ) {
 			return;
 		}
-		
+
 		global $template;
 
 		$template_file_name		 = basename( $template );
@@ -62,7 +61,7 @@ class Show_Template_File_Name {
 			$child_theme_name	 = __( 'Theme name: ', 'show-current-template' )
 					. $current_theme_name;
 			$parent_theme_name	 = $current_theme->parent()->Name;
-			$parent_theme_name	 = ' (' . $parent_theme_name 
+			$parent_theme_name	 = ' (' . $parent_theme_name
 					. __( "'s child", 'show-current-template' ) . ")";
 			$parent_or_child	 = $child_theme_name . $parent_theme_name;
 		} else {
@@ -110,15 +109,16 @@ class Show_Template_File_Name {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'show_template_file_name_on_top',
 			'id'	 => 'included_files_path',
-			'title'	 => __( 'Also, below template files are included:'
-					, 'show-current-template' ) . '<br /><ul id="included-files-list">'
-			. $included_files_list . '</ul>',
+			'title'	 => __( 'Also, below template files are included:', 'show-current-template' )
+			. '<br /><ul id="included-files-list">'
+			. $included_files_list
+			. '</ul>',
 		) );
 	}
 
 	public function add_current_template_stylesheet() {
 
-		if ( is_admin() or !is_super_admin() ) {
+		if ( is_admin() or ! is_super_admin() ) {
 			return;
 		}
 
@@ -127,9 +127,9 @@ class Show_Template_File_Name {
 		if ( $wp_version >= '3.8' ) {
 			wp_register_style( 'current-template-style', plugins_url( 'style.css', __FILE__ ) );
 			wp_enqueue_style( 'current-template-style' );
-		}  else {
+		} else {
 			wp_register_style( 'current-template-style', plugins_url( 'style-old.css', __FILE__ ) );
-			wp_enqueue_style( 'current-template-style' );			
+			wp_enqueue_style( 'current-template-style' );
 		}
 	}
 
