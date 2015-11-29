@@ -46,9 +46,10 @@ class Show_Template_File_Name {
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
-		if ( is_admin() or !is_super_admin() )
+		if ( is_admin() or !is_super_admin() ) {
 			return;
-
+		}
+		
 		global $template;
 
 		$template_file_name		 = basename( $template );
