@@ -125,12 +125,14 @@ class Show_Template_File_Name {
 		$wp_version = get_bloginfo( 'version' );
 
 		if ( $wp_version >= '3.8' ) {
-			wp_register_style( 'current-template-style', plugins_url( 'style.css', __FILE__ ) );
-			wp_enqueue_style( 'current-template-style' );
+			$is_older_than_3_8 = '';
 		} else {
-			wp_register_style( 'current-template-style', plugins_url( 'style-old.css', __FILE__ ) );
-			wp_enqueue_style( 'current-template-style' );
+			$is_older_than_3_8 = '-old';
 		}
+		
+		$stylesheet_path = plugins_url( 'css/style' . $is_older_than_3_8 . '.css', __FILE__ );
+		wp_register_style( 'current-template-style', $stylesheet_path );
+		wp_enqueue_style( 'current-template-style' );
 	}
 
 }
