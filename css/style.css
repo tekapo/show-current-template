@@ -25,4 +25,10 @@
 #wpadminbar #included-files-list {
   margin-left: 20px; }
 
+#wp-admin-bar-show_template_file_name_on_top-default {
+    /*height: auto;*/
+    max-height: 90vh;
+    overflow-x: hidden;
+}
+
 /*# sourceMappingURL=style.css.map */
