@@ -3,8 +3,8 @@ Contributors: tai
 Donate link:
 Tags: template, toolbar
 Requires at least: 3.5
-Tested up to: 4.4
-Stable tag: 0.2.2
+Tested up to: 4.6.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,10 @@ None so far.
 None so far.
 
 == Changelog ==
+
+= 0.3.0 =
+* UPDATED: Make the file list scrollable.
+* UPDATED: Change css to sass.
 
 = 0.2.2 =
 * Oops, too short.
