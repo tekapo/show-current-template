@@ -4,7 +4,7 @@ Donate link: https://ko-fi.com/tekapo
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.3
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ None so far.
 None so far.
 
 == Changelog ==
+
+= 0.3.2 =
+* No change at all except the version number in the plugin php file.
 
 = 0.3.1 =
 * Just add a donate link.
