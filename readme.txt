@@ -1,6 +1,6 @@
 === Show Current Template ===
 Contributors: tai
-Donate link: https://wp.tekapo.com/is-my-plugin-useful/
+Donate link: https://ko-fi.com/tekapo
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.3
@@ -15,7 +15,7 @@ A WordPress plugin which shows the current template file name, the current theme
 Inspired by (and big thanks to):
 
 * https://gist.github.com/gatespace/4482529
-* https://wordpress.org/plugins/reveal-template/
+* http://wordpress.org/plugins/reveal-template/
 
 
 == Installation ==
