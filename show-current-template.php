@@ -3,7 +3,7 @@
 /*
   Plugin Name: Show Current Template
   Plugin URI: https://wp.tekapo.com/
-  Description: Show the current template file name in the tool bar. <a href="hhttps://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
+  Description: Show the current template file name in the tool bar.
   Author: JOTAKI Taisuke
   Version: 0.3.2
   Author URI: https://tekapo.com/
