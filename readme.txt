@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
-A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. If you like this plugin, <a href="hhttps://wp.tekapo.com/is-my-plugin-useful/">you can buy me a coffee! ;-)</a>
+A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. If you like this plugin, <a href="https://wp.tekapo.com/is-my-plugin-useful/">you can buy me a coffee! ;-)</a>
 
 Inspired by (and big thanks to):
 
