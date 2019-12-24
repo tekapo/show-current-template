@@ -4,13 +4,13 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.3
-Stable tag: 0.3.2
+Stable tag: 0.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
-A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. If you like this plugin, <a href="hhttps://wp.tekapo.com/is-my-plugin-useful/">you can buy me a coffer! ;-)</a>
+A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. If you like this plugin, <a href="hhttps://wp.tekapo.com/is-my-plugin-useful/">you can buy me a coffee! ;-)</a>
 
 Inspired by (and big thanks to):
 
@@ -44,6 +44,9 @@ None so far.
 None so far.
 
 == Changelog ==
+
+= 0.3.3 =
+* No functional change at all except the version number in the plugin php file and donation url.
 
 = 0.3.2 =
 * No change at all except the version number in the plugin php file.
