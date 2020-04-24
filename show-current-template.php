@@ -51,8 +51,10 @@ class Show_Template_File_Name {
 	}
 	
 	public function action_get_template_part() {
-		$a = debug_backtrace( false );
-		var_dump($a[0]['args'][0]);
+		$t = debug_backtrace( false );
+//        var_dump($t[0]['args'][2][0]);
+        $template_name = $t[0]['args'][2][0];
+		echo $template_name;
 	}
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
