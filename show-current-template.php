@@ -5,7 +5,7 @@
   Plugin URI: https://wp.tekapo.com/
   Description: Show the current template file name in the tool bar. <a href="hhttps://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
   Author: JOTAKI Taisuke
-  Version: 0.3.3
+  Version: 2.0.0-a
   Author URI: https://tekapo.com/
   Text Domain: show-current-template
   Domain Path: /languages/
@@ -31,6 +31,11 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+
+//debug_backtrace( false );
+
+//add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
+
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 new Show_Template_File_Name();
@@ -40,7 +45,37 @@ class Show_Template_File_Name {
 	function __construct() {
 		add_action( "admin_bar_menu", array( &$this, "show_template_file_name_on_top" ), 9999 );
 		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_stylesheet" ), 9999 );
+//		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );		
+//		a_test('friend');
+		add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
+        add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
+        add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
+        
 	}
+	
+	public function action_get_template_part() {
+		$t = debug_backtrace( false );
+//        var_dump($t[0]['args'][2][0]);
+        $template_name = $t[0]['args'][2][0];
+        
+//        str=                 div.template_file
+		echo $template_name;
+	}
+    
+    public function fire_on_footer() {
+        echo 'ffffffoootter';
+        $t = debug_backtrace( false );
+        var_dump($t[7]);
+    }
+
+    public function fire_on_sidebar($name) {
+        
+        var_dump($name);
+        
+        echo 'siiiidebaaaar::'. $name;
+        $t = debug_backtrace( false );
+        var_dump($t);
+    }
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
@@ -49,6 +84,8 @@ class Show_Template_File_Name {
 		}
 
 		global $template;
+		
+		var_dump($template);
 
 		$template_file_name		 = basename( $template );
 		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
@@ -72,6 +109,8 @@ class Show_Template_File_Name {
 		$included_files = get_included_files();
 
 		sort( $included_files );
+//		var_dump($included_files);
+
 		$included_files_list = '';
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
@@ -134,5 +173,61 @@ class Show_Template_File_Name {
 		wp_register_style( 'current-template-style', $stylesheet_path );
 		wp_enqueue_style( 'current-template-style' );
 	}
+	
+	public function add_current_template_js() {
+		if ( is_admin() or ! is_super_admin() ) {
+			return;
+		}
+			
+	$js_path = plugins_url( 'js/greeter.js' , __FILE__ );
+		wp_register_script( 'current-template-js', $js_path );
+		wp_enqueue_script( 'current-template-js' );
+	}
 
 }
+
+//function get_functions_in_file( $file, $sort = FALSE ) {
+//	$file = file( $file );
+////  var_dump($file);
+//	$functions = array();
+//
+//	foreach ( $file as $line ) {
+//
+//		$findme = 'get_template_part';
+//
+//		if ( $aaaa = strpos( $line, $findme ) ) {
+////			var_dump( $aaaa );
+//			$line = trim( $line );
+//
+//			preg_match( '/get_template_part\((.*)\)/', $line, $matches );
+////			print_r( $matches );
+//
+//			$functions[] = $line;
+//		}
+//	}
+//
+//	if ( $sort ) {
+//		asort( $functions );
+//		$functions = array_values( $functions );
+//	}
+//
+//	return $functions;
+//}
+
+$template = 'wp-content/themes/twentytwenty/singular.php';
+
+//$fff = get_functions_in_file( $template );
+//var_dump( $fff );
+
+function a_test($str)
+{
+//    echo "\nHi: $str";
+//    var_dump(debug_backtrace());
+	foreach(debug_backtrace() as $t) {              
+   echo ' calls ' . $t['function'] . "()<br/>";
+}
+}
+
+//a_test('friend');
+?>
+div.ll
