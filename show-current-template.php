@@ -32,9 +32,9 @@
  */
 
 
-//debug_backtrace( false );
+define( 'SCT_DEBUG_MODE', true );
+//define( 'SCT_DEBUG_MODE', false );
 
-//add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -43,35 +43,54 @@ new Show_Template_File_Name();
 class Show_Template_File_Name {
 
 	function __construct() {
+		$this->run_add_actions();
+		$this->run_add_filters();
+	}
+
+	public function run_add_actions() {
+
+//		if (!SCT_DEBUG_MODE) {
+//			if (is_admin() or!is_super_admin()) {
+//				return;
+//			}
+//		}
+
 		add_action( "admin_bar_menu", array( &$this, "show_template_file_name_on_top" ), 9999 );
 		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_stylesheet" ), 9999 );
-//		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );		
+//		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );
 //		a_test('friend');
 		add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
-        add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
-        add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
-        
+		add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
+		add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
 	}
-	
+
+	public function run_add_filters() {
+		if ( SCT_DEBUG_MODE ) {
+			add_filter('show_admin_bar', '__return_true', 1000);
+		}
+	}
+
 	public function action_get_template_part() {
 		$t = debug_backtrace( false );
 //        var_dump($t[0]['args'][2][0]);
         $template_name = $t[0]['args'][2][0];
-        
+
 //        str=                 div.template_file
 		echo $template_name;
 	}
-    
+
     public function fire_on_footer() {
-        echo 'ffffffoootter';
+//        echo 'ffffffoootter';
         $t = debug_backtrace( false );
-        var_dump($t[7]);
+
+        echo 'sct::'.$t[7]['args'][0][0];
+//        var_dump($t[7]['args'][0][0]);
     }
 
     public function fire_on_sidebar($name) {
-        
+
         var_dump($name);
-        
+
         echo 'siiiidebaaaar::'. $name;
         $t = debug_backtrace( false );
         var_dump($t);
@@ -79,16 +98,22 @@ class Show_Template_File_Name {
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
-		if ( is_admin() or ! is_super_admin() ) {
-			return;
+		if ( SCT_DEBUG_MODE ) {
+			if ( is_admin() ) {
+				return;
+			}
+		} elseif ( ! SCT_DEBUG_MODE ) {
+			if ( is_admin() or ! is_super_admin()) {
+				return;
+			}
 		}
 
 		global $template;
-		
-		var_dump($template);
+
+//		var_dump($template);
 
 		$template_file_name		 = basename( $template );
-		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
+		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
 
 		$current_theme		 = wp_get_theme();
 		$current_theme_name	 = $current_theme->Name;
@@ -157,9 +182,11 @@ class Show_Template_File_Name {
 
 	public function add_current_template_stylesheet() {
 
-		if ( is_admin() or ! is_super_admin() ) {
-			return;
-		}
+        if ( ! SCT_DEBUG_MODE ) {
+            if ( is_admin() or ! is_super_admin() ) {
+                return;
+            }
+        }
 
 		$wp_version = get_bloginfo( 'version' );
 
@@ -168,17 +195,19 @@ class Show_Template_File_Name {
 		} else {
 			$is_older_than_3_8 = '-old';
 		}
-		
+
 		$stylesheet_path = plugins_url( 'css/style' . $is_older_than_3_8 . '.css', __FILE__ );
 		wp_register_style( 'current-template-style', $stylesheet_path );
 		wp_enqueue_style( 'current-template-style' );
 	}
-	
+
 	public function add_current_template_js() {
-		if ( is_admin() or ! is_super_admin() ) {
-			return;
-		}
-			
+        if ( ! SCT_DEBUG_MODE ) {
+            if ( is_admin() or ! is_super_admin() ) {
+                return;
+            }
+        }
+
 	$js_path = plugins_url( 'js/greeter.js' , __FILE__ );
 		wp_register_script( 'current-template-js', $js_path );
 		wp_enqueue_script( 'current-template-js' );
@@ -223,11 +252,7 @@ function a_test($str)
 {
 //    echo "\nHi: $str";
 //    var_dump(debug_backtrace());
-	foreach(debug_backtrace() as $t) {              
+	foreach(debug_backtrace() as $t) {
    echo ' calls ' . $t['function'] . "()<br/>";
 }
 }
-
-//a_test('friend');
-?>
-div.ll
