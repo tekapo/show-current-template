@@ -48,14 +48,34 @@ class Show_Template_File_Name {
 //		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );		
 //		a_test('friend');
 		add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
+        add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
+        add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
+        
 	}
 	
 	public function action_get_template_part() {
 		$t = debug_backtrace( false );
 //        var_dump($t[0]['args'][2][0]);
         $template_name = $t[0]['args'][2][0];
+        
+//        str=                 div.template_file
 		echo $template_name;
 	}
+    
+    public function fire_on_footer() {
+        echo 'ffffffoootter';
+        $t = debug_backtrace( false );
+        var_dump($t[7]);
+    }
+
+    public function fire_on_sidebar($name) {
+        
+        var_dump($name);
+        
+        echo 'siiiidebaaaar::'. $name;
+        $t = debug_backtrace( false );
+        var_dump($t);
+    }
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
@@ -65,7 +85,7 @@ class Show_Template_File_Name {
 
 		global $template;
 		
-//		var_dump($template);
+		var_dump($template);
 
 		$template_file_name		 = basename( $template );
 		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
@@ -209,3 +229,5 @@ function a_test($str)
 }
 
 //a_test('friend');
+?>
+div.ll
