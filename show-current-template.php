@@ -40,7 +40,7 @@ new Show_Template_File_Name();
 
 class Show_Template_File_Name {
 
-	function __construct() {
+	public function __construct() {
 		$this->run_add_actions();
 		$this->run_add_filters();
 	}
@@ -213,7 +213,7 @@ class Show_Template_File_Name {
 		}
 
 		$js_path = plugins_url( 'js/greeter.js', __FILE__ );
-		wp_register_script( 'current-template-js', $js_path );
+		wp_register_script( 'current-template-js', $js_path, '', 1, true );
 		wp_enqueue_script( 'current-template-js' );
 	}
 
