@@ -58,6 +58,7 @@ class Show_Template_File_Name {
 		// add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );
 		// a_test('friend');
 		add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
+		add_action( 'wp_head', array( $this, 'fire_on_header' ), 10, 3 );
 		add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
 		add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
 	}
@@ -70,19 +71,19 @@ class Show_Template_File_Name {
 
 	public function action_get_template_part() {
 		$t = debug_backtrace( false );
-		// var_dump($t[0]['args'][2][0]);
+		// var_dump($t);
 		$template_name = $t[0]['args'][2][0];
-
-		// str= div.template_file
 		echo $template_name;
 	}
 
-	public function fire_on_footer() {
-		// echo 'ffffffoootter';
+	public function fire_on_header() {
 		$t = debug_backtrace( false );
-
 		echo 'sct::' . $t[7]['args'][0][0];
-		// var_dump($t[7]['args'][0][0]);
+	}
+	
+	public function fire_on_footer() {
+		$t = debug_backtrace( false );
+		echo 'sct::' . $t[7]['args'][0][0];
 	}
 
 	public function fire_on_sidebar( $name ) {
