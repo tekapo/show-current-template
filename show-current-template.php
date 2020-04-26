@@ -28,10 +28,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- **/
+**/
+
+// TODO:
+// show current template 表示部に
+//header.phpを表示させる
+// footer.phpを表示させる
+
 
 define( 'SCT_DEBUG_MODE', true );
 // define( 'SCT_DEBUG_MODE', false );
+
+//load_template();
 
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
@@ -55,12 +63,12 @@ class Show_Template_File_Name {
 
 		add_action( 'admin_bar_menu', array( &$this, 'show_template_file_name_on_top' ), 9999 );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'add_current_template_stylesheet' ), 9999 );
-		// add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );
-		// a_test('friend');
-		add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
+		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );
+		 
 		add_action( 'wp_head', array( $this, 'fire_on_header' ), 10, 3 );
 		add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
 		add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
+		add_action( 'get_template_part', array( $this, 'action_get_template_part' ), 10, 3 );
 	}
 
 	public function run_add_filters() {
@@ -73,26 +81,37 @@ class Show_Template_File_Name {
 		$t = debug_backtrace( false );
 		// var_dump($t);
 		$template_name = $t[0]['args'][2][0];
-		echo $template_name;
+		$str_format = '<div class="on-hover-pop">%s</div>';
+		$template_name_in_html_tag = sprintf($str_format, $template_name);
+		echo $template_name_in_html_tag;
+		return $template_name;
 	}
 
 	public function fire_on_header() {
 		$t = debug_backtrace( false );
-		echo 'sct::' . $t[7]['args'][0][0];
+//		var_dump($t);
+//		echo 'sct::' . $t[7]['args'][0][0];
+		$header_file_name = $t[7]['args'][0][0];
+		$str_format = '<div class="on-hover-pop">%s</div>';
+		$template_name_in_html_tag = sprintf($str_format, $header_file_name);
+		echo $template_name_in_html_tag;
+		return $header_file_name;
 	}
 	
 	public function fire_on_footer() {
 		$t = debug_backtrace( false );
-		echo 'sct::' . $t[7]['args'][0][0];
+		$footer_file_name = $t[7]['args'][0][0];
+//		echo 'sct::' . $t[7]['args'][0][0];
+		return $footer_file_name;
 	}
 
 	public function fire_on_sidebar( $name ) {
 
-		var_dump( $name );
+//		var_dump( $name );
 
 		echo 'siiiidebaaaar::' . $name;
 		$t = debug_backtrace( false );
-		var_dump( $t );
+//		var_dump( $t );
 	}
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
@@ -136,6 +155,15 @@ class Show_Template_File_Name {
 		// var_dump($included_files);
 
 		$included_files_list = '';
+		
+		$included_files_list .= $this->fire_on_header();
+		$included_files_list .= $this->fire_on_footer();
+		$aaaaa = $this->action_get_template_part();
+		var_dump($aaaaa);
+		
+//		var_dump($included_files_list);
+		
+				
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
 				$filepath = strstr( $filename, 'themes' );
