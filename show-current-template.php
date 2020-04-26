@@ -28,18 +28,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-**/
+ **/
 
 // TODO:
 // show current template 表示部に
-//header.phpを表示させる
+// header.phpを表示させる
 // footer.phpを表示させる
 
 
 define( 'SCT_DEBUG_MODE', true );
 // define( 'SCT_DEBUG_MODE', false );
 
-//load_template();
+// load_template();
 
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
@@ -62,9 +62,10 @@ class Show_Template_File_Name {
 		// }
 
 		add_action( 'admin_bar_menu', array( &$this, 'show_template_file_name_on_top' ), 9999 );
+		add_action('wp_footer',  array( $this, 'actiontest3' ));
 		add_action( 'wp_enqueue_scripts', array( &$this, 'add_current_template_stylesheet' ), 9999 );
-		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );
-		 
+		add_action( 'wp_enqueue_scripts', array( &$this, 'add_current_template_js' ), 9999 );
+
 		add_action( 'wp_head', array( $this, 'fire_on_header' ), 10, 3 );
 		add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
 		add_action( 'get_sidebar', array( $this, 'fire_on_sidebar' ), 10, 3 );
@@ -80,22 +81,22 @@ class Show_Template_File_Name {
 	public function action_get_template_part() {
 		$t = debug_backtrace( false );
 		// var_dump($t);
-		$template_name = $t[0]['args'][2][0];
-		$str_format = '<div class="on-hover-pop">%s</div>';
-		$template_name_in_html_tag = sprintf($str_format, $template_name);
+		$template_name             = $t[0]['args'][2][0];
+		$str_format                = '<div class="on-hover-pop">%s</div>';
+		$template_name_in_html_tag = sprintf( $str_format, $template_name );
 		echo $template_name_in_html_tag;
 		return $template_name;
 	}
 
 	public function fire_on_header() {
-		$t = debug_backtrace( false );
-		$header_file_name = $t[7]['args'][0][0];
-		$str_format = '<div class="on-hover-pop">%s</div>';
-		$template_name_in_html_tag = sprintf($str_format, $header_file_name);
+		$t                         = debug_backtrace( false );
+		$header_file_name          = $t[7]['args'][0][0];
+		$str_format                = '<div class="on-hover-pop">%s</div>';
+		$template_name_in_html_tag = sprintf( $str_format, $header_file_name );
 		echo $template_name_in_html_tag;
 		return $header_file_name;
 	}
-	
+
 	public function get_header_file() {
 		$t = debug_backtrace( false );
 		// var_dump($t);
@@ -108,21 +109,74 @@ class Show_Template_File_Name {
 
 		return $header_file_name;
 	}
+
+	public function get_footer_file() {
+		
+//		add_action($tag, $function_to_add, $priority, $accepted_args);
+		
+//		$t = debug_backtrace( false );
+//		 var_dump($t);
+
+//		$n = array_column( $t, 'function' );
+//		 var_dump($n);
+//		$array_num = array_search( 'locate_template', $n );
+
+//		$footer_file_name = $t[ $array_num ]['args'][0][0];
+		
+//		get_footer();
+		
+//		var_dump($footer_file_name);
+		
+//		add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
+
+
+//		$footer_file_name = locate_template('footer.php');
+		
+					$included_files = get_included_files();
+//			var_dump($included_files);
+
+		
+//		return $footer_file_name;
+	}	
 	
 	public function fire_on_footer() {
-		$t = debug_backtrace( false );
+		
+		$included_files = get_included_files();
+//		var_dump($included_files);
+		
+		$t                = debug_backtrace( false );
+//		var_dump('$t:::', $t);
 		$footer_file_name = $t[7]['args'][0][0];
-//		echo 'sct::' . $t[7]['args'][0][0];
+		// echo 'sct::' . $t[7]['args'][0][0];
+		
+		echo 'fire_on_footer';
+
+//		var_dump($a);
 		return $footer_file_name;
 	}
 
 	public function fire_on_sidebar( $name ) {
 
-//		var_dump( $name );
+		// var_dump( $name );
 
 		echo 'siiiidebaaaar::' . $name;
 		$t = debug_backtrace( false );
-//		var_dump( $t );
+		// var_dump( $t );
+	}
+	
+	public function actiontest($wp_admin_bar) {
+		$args = ['gogogog'];
+		$wp_admin_bar->add_node( $args );
+	}
+	
+	public function actiontest2($wp_admin_bar) {
+		
+		add_action( 'admin_bar_menu', array( &$this, 'actiontest' ), 9999 );
+	}
+	
+	public function actiontest3($wp_admin_bar) {
+		echo 'gox3';
+		add_action( 'admin_bar_menu', array( $this, 'actiontest2' ), 9999 );
 	}
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
@@ -161,24 +215,34 @@ class Show_Template_File_Name {
 		}
 
 		$included_files = get_included_files();
+//		$iii = meks_which_template_is_loaded();
+//		var_dump($iii);
 
 		sort( $included_files );
 		// var_dump($included_files);
 
 		$included_files_list = '';
+
+//		 $included_files_list .= $this->fire_on_header();
 		
-//		$included_files_list .= $this->fire_on_header();
-//		$included_files_list .= $this->fire_on_footer();
-//		$aaaaa = $this->action_get_template_part();
-//		var_dump($aaaaa);
+		$ggg = $this->fire_on_footer();
+//		var_dump($ggg);
 		
-//		var_dump($included_files_list);
-		
+//		add_action( 'wp_footer', array( $this, 'fire_on_footer' ), 10, 3 );
+//
+		 $included_file_footer = $this->fire_on_footer('fuck', 'baa');
+//		 var_dump('fffff:::', $included_file_footer);
+		// $aaaaa = $this->action_get_template_part();
+		// var_dump($aaaaa);
+
+		// var_dump($included_files_list);
+
 		$header_file = $this->get_header_file();
-		
+		$footer_file = $this->get_footer_file();
+//		var_dump('222:::', $footer_file);
+
 		$included_files_list = '<li>' . "$header_file" . '</li>';
-		
-				
+
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
 				$filepath = strstr( $filename, 'themes' );
@@ -263,43 +327,44 @@ class Show_Template_File_Name {
 
 }
 
-// function get_functions_in_file( $file, $sort = FALSE ) {
-// $file = file( $file );
-// var_dump($file);
-// $functions = array();
-//
-// foreach ( $file as $line ) {
-//
-// $findme = 'get_template_part';
-//
-// if ( $aaaa = strpos( $line, $findme ) ) {
-// var_dump( $aaaa );
-// $line = trim( $line );
-//
-// preg_match( '/get_template_part\((.*)\)/', $line, $matches );
-// print_r( $matches );
-//
-// $functions[] = $line;
-// }
-// }
-//
-// if ( $sort ) {
-// asort( $functions );
-// $functions = array_values( $functions );
-// }
-//
-// return $functions;
-// }
 
-$template = 'wp-content/themes/twentytwenty/singular.php';
-
-// $fff = get_functions_in_file( $template );
-// var_dump( $fff );
-
-function a_test( $str ) {
-	// echo "\nHi: $str";
-	// var_dump(debug_backtrace());
-	foreach ( debug_backtrace() as $t ) {
-		echo ' calls ' . $t['function'] . '()<br/>';
-	}
+function meks_which_template_is_loaded($jjj) {
+			$included_files = get_included_files();
+			echo 'CCCCC';
+			return $included_files;
+//	var_dump($jjj);
+//			return $jjj;
 }
+
+$hhhh = add_action( 'wp_footer', 'meks_which_template_is_loaded' );
+
+var_dump($hhhh);
+
+function insidefooter() {
+	echo 'LLL';
+	add_action('admin_bar_menu', 'customize_admin_bar_menu', 9999);
+}
+
+
+function customize_admin_bar_menu($wp_admin_bar){
+    $title = sprintf(
+        '<span class="ab-icon"></span><span class="ab-label">%s</span>',
+        'BookPress Dashboard'
+    );
+    $wp_admin_bar->add_menu(array(
+        'id'    => 'bookpress-app',
+        'meta'  => array(),
+        'title' => $title,
+        'href'  => home_url('/app/')
+    )); 
+}
+
+//insidefooter();
+
+//add_action('init', 'insidefooter');
+
+function bbbbbbb() {
+	add_action('init', 'insidefooter');
+}
+
+bbbbbbb();
