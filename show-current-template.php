@@ -89,8 +89,6 @@ class Show_Template_File_Name {
 
 	public function fire_on_header() {
 		$t = debug_backtrace( false );
-//		var_dump($t);
-//		echo 'sct::' . $t[7]['args'][0][0];
 		$header_file_name = $t[7]['args'][0][0];
 		$str_format = '<div class="on-hover-pop">%s</div>';
 		$template_name_in_html_tag = sprintf($str_format, $header_file_name);
@@ -109,7 +107,6 @@ class Show_Template_File_Name {
 		$header_file_name = $t[ $array_num ]['args'][0][0];
 
 		return $header_file_name;
-
 	}
 	
 	public function fire_on_footer() {
