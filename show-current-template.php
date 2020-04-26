@@ -98,6 +98,20 @@ class Show_Template_File_Name {
 		return $header_file_name;
 	}
 	
+	public function get_header_file() {
+		$t = debug_backtrace( false );
+		// var_dump($t);
+
+		$n = array_column( $t, 'function' );
+		// var_dump($n);
+		$array_num = array_search( 'locate_template', $n );
+
+		$header_file_name = $t[ $array_num ]['args'][0][0];
+
+		return $header_file_name;
+
+	}
+	
 	public function fire_on_footer() {
 		$t = debug_backtrace( false );
 		$footer_file_name = $t[7]['args'][0][0];
@@ -156,12 +170,16 @@ class Show_Template_File_Name {
 
 		$included_files_list = '';
 		
-		$included_files_list .= $this->fire_on_header();
-		$included_files_list .= $this->fire_on_footer();
-		$aaaaa = $this->action_get_template_part();
-		var_dump($aaaaa);
+//		$included_files_list .= $this->fire_on_header();
+//		$included_files_list .= $this->fire_on_footer();
+//		$aaaaa = $this->action_get_template_part();
+//		var_dump($aaaaa);
 		
 //		var_dump($included_files_list);
+		
+		$header_file = $this->get_header_file();
+		
+		$included_files_list = '<li>' . "$header_file" . '</li>';
 		
 				
 		foreach ( $included_files as $filename ) {
