@@ -1,7 +1,7 @@
 /* 
     Document   : style.css
     Created on : 2013/01/21, 16:04:46
-    Updated on : 2016/10/17, 18:42
+    Updated on : 2020/04/26, 12:30
     Author     : tai
     Description:
     The stylesheet for the plugin.
@@ -28,5 +28,8 @@
 #wp-admin-bar-show_template_file_name_on_top-default {
   max-height: 90vh;
   overflow-x: hidden; }
+
+.custom-header-media {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
