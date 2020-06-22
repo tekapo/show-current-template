@@ -4,7 +4,7 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.3
-Stable tag: 0.3.3
+Stable tag: 0.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ None so far.
 None so far.
 
 == Changelog ==
+
+= 0.3.4 =
+* No functional change at all except the version number in the plugin php file and donation url.
 
 = 0.3.3 =
 * No functional change at all except the version number in the plugin php file and donation url.
