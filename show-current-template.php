@@ -38,11 +38,12 @@ new Show_Template_File_Name();
 class Show_Template_File_Name {
 
 	function __construct() {
-				add_action( 'wp_footer', array($this, 'get_included_files_at_footr') );
+		add_action( 'wp_footer', array( $this, 'get_included_files_at_footr' ) );
 
 		add_action( "admin_bar_menu", array( &$this, "show_template_file_name_on_top" ), 9999 );
 		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_stylesheet" ), 9999 );
-}
+		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_js" ), 9999 );
+	}
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
@@ -71,8 +72,7 @@ class Show_Template_File_Name {
 					. $current_theme_name . ' (' . __( 'NOT a child theme', 'show-current-template' ) . ')';
 		}
 
-		$included_files = $this->get_included_files_at_footr();
-//		$included_files = get_included_files();
+		$included_files = get_included_files();
 
 		sort( $included_files );
 		$included_files_list = '';
@@ -121,27 +121,25 @@ class Show_Template_File_Name {
 	
 	public function get_included_files_at_footr() {
 		$included_files = get_included_files();
-		return $included_files;
-//				global $template;
-//
-//		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
-//
-//		sort( $included_files );
-//		$included_files_list = '';
-//		foreach ( $included_files as $filename ) {
-//			if ( strstr( $filename, 'themes' ) ) {
-//				$filepath = strstr( $filename, 'themes' );
-//				if ( $template_relative_path == $filepath ) {
-//					$included_files_list .= '';
-//				} else {
-//					$included_files_list .= '<li>' . "$filepath" . '</li>';
-//				}
-//			}
-//		}
-//		echo '<ol>';
-//		echo $included_files_list;
-//		echo '</ol>';
-//		var_dump($included_files_list);
+		global $template;
+
+		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
+
+		sort( $included_files );
+		$included_files_list = '';
+		foreach ( $included_files as $filename ) {
+			if ( strstr( $filename, 'themes' ) ) {
+				$filepath = strstr( $filename, 'themes' );
+				if ( $template_relative_path == $filepath ) {
+					$included_files_list .= '';
+				} else {
+					$included_files_list .= '<li>' . "$filepath" . '</li>';
+				}
+			}
+		}
+		echo '<ol id="included-files-fie-on-wp-footer">';
+		echo $included_files_list;
+		echo '</ol>';
 	}
 
 	public function add_current_template_stylesheet() {
@@ -162,5 +160,22 @@ class Show_Template_File_Name {
 		wp_register_style( 'current-template-style', $stylesheet_path );
 		wp_enqueue_style( 'current-template-style' );
 	}
+	public function add_current_template_js() {
 
+		if ( is_admin() or ! is_super_admin() ) {
+			return;
+		}
+
+		$wp_version = get_bloginfo( 'version' );
+
+		if ( $wp_version >= '3.8' ) {
+			$is_older_than_3_8 = '';
+		} else {
+			$is_older_than_3_8 = '-old';
+		}
+		
+		$js_path = plugins_url( 'assets/js/replace' . $is_older_than_3_8 . '.js', __FILE__ );
+		wp_register_script( 'current-template-js', $js_path, [], 6, true );
+		wp_enqueue_script( 'current-template-js' );
+	}
 }
