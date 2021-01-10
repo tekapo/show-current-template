@@ -38,9 +38,11 @@ new Show_Template_File_Name();
 class Show_Template_File_Name {
 
 	function __construct() {
+				add_action( 'wp_footer', array($this, 'get_included_files_at_footr') );
+
 		add_action( "admin_bar_menu", array( &$this, "show_template_file_name_on_top" ), 9999 );
 		add_action( 'wp_enqueue_scripts', array( &$this, "add_current_template_stylesheet" ), 9999 );
-	}
+}
 
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 
@@ -69,7 +71,8 @@ class Show_Template_File_Name {
 					. $current_theme_name . ' (' . __( 'NOT a child theme', 'show-current-template' ) . ')';
 		}
 
-		$included_files = get_included_files();
+		$included_files = $this->get_included_files_at_footr();
+//		$included_files = get_included_files();
 
 		sort( $included_files );
 		$included_files_list = '';
@@ -114,6 +117,31 @@ class Show_Template_File_Name {
 			. $included_files_list
 			. '</ul>',
 		) );
+	}
+	
+	public function get_included_files_at_footr() {
+		$included_files = get_included_files();
+		return $included_files;
+//				global $template;
+//
+//		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
+//
+//		sort( $included_files );
+//		$included_files_list = '';
+//		foreach ( $included_files as $filename ) {
+//			if ( strstr( $filename, 'themes' ) ) {
+//				$filepath = strstr( $filename, 'themes' );
+//				if ( $template_relative_path == $filepath ) {
+//					$included_files_list .= '';
+//				} else {
+//					$included_files_list .= '<li>' . "$filepath" . '</li>';
+//				}
+//			}
+//		}
+//		echo '<ol>';
+//		echo $included_files_list;
+//		echo '</ol>';
+//		var_dump($included_files_list);
 	}
 
 	public function add_current_template_stylesheet() {
