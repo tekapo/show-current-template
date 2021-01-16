@@ -3,8 +3,8 @@ Contributors: tai
 Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
-Tested up to: 5.3
-Stable tag: 0.3.4
+Tested up to: 5.6
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,12 @@ Inspired by (and big thanks to):
 
 == Frequently Asked Questions ==
 
-None so far.
+= I don't see the toolbar. =
+Is the Toolbar (Show Toolbar when viewing site) option in your profile page is checked?
+You can find your profile page is in your WordPress admin -> Users -> Profile.
+
+= I don't see the current template file name in the toolbar. =
+Do you logged in as "Administrator"? Other role users like "Editor" can't see the file name.
 
 == Screenshots ==
 
@@ -44,6 +49,10 @@ None so far.
 None so far.
 
 == Changelog ==
+
+= 0.4.0 =
+* Fix not showing all included files with WordPress version 5.4 or greater.
+* Clean up some code. 
 
 = 0.3.4 =
 * No functional change at all except the version number in the plugin php file and donation url.
