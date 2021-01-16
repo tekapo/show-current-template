@@ -4,7 +4,7 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.6
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,9 @@ Do you logged in as "Administrator"? Other role users like "Editor" can't see th
 None so far.
 
 == Changelog ==
+
+= 0.4.1 =
+* Fix showing included files at bottom when visitor visits the site. This issue was reported by @tsato. Thank you very much!
 
 = 0.4.0 =
 * Fix not showing all included files with WordPress version 5.4 or greater.
