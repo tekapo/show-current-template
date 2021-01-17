@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.4.1
+Version: 0.4.2
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -30,7 +30,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.4.1' );
+define( 'WPSCT_VERSION', '0.4.2' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -127,11 +127,11 @@ class Show_Template_File_Name {
 	}
 
 	public function get_included_files_at_footr() {
-		
-		if ( ! is_user_logged_in() ) {
+
+		if ( ! is_user_logged_in() || ! current_user_can( 'administrator' ) ) {
 			return;
 		}
-		
+
 		$included_files = get_included_files();
 		global $template;
 
@@ -152,7 +152,7 @@ class Show_Template_File_Name {
 		$included_files_format = '<ol id="included-files-fie-on-wp-footer">'
 				. '%s'
 				. '</ol>';
-		$included_files_html   = sprintf( $included_files_format, $included_files_list );
+		$included_files_html = sprintf( $included_files_format, $included_files_list );
 		echo wp_kses_post( $included_files_html );
 	}
 
