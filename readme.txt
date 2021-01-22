@@ -4,7 +4,7 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.6
-Stable tag: 0.4.2
+Stable tag: 0.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,9 @@ Do you logged in as "Administrator"? Other role users like "Editor" can't see th
 None so far.
 
 == Changelog ==
+
+= 0.4.3 =
+* Fix the JavaScript error reported by @flexer. Special thanks to @dmchale for the fix!
 
 = 0.4.2 =
 * Fix showing included files at bottom when the logged in user's roles other than admin.
