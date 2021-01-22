@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.4.2
+Version: 0.4.3
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -30,7 +30,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.4.2' );
+define( 'WPSCT_VERSION', '0.4.3' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -184,7 +184,7 @@ class Show_Template_File_Name {
 
 		if ( $wp_version >= '5.4' ) {
 			$js_path = plugins_url( 'assets/js/replace.js', __FILE__ );
-			wp_register_script( 'current-template-js', $js_path, array(), 6, true );
+			wp_register_script( 'current-template-js', $js_path, array( 'jquery' ), WPSCT_VERSION, true );
 			wp_enqueue_script( 'current-template-js' );
 		} else {
 			return;
