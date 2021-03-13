@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.4.3
+Version: 0.4.4-alpha
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -30,13 +30,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.4.3' );
+define( 'WPSCT_VERSION', '0.4.4-alpha' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 new Show_Template_File_Name();
 
 class Show_Template_File_Name {
+	
+	public $debug_info = [];
 
 	public function __construct() {
 		add_action( 'wp_footer', array( $this, 'get_included_files_at_footr' ) );
@@ -87,6 +89,20 @@ class Show_Template_File_Name {
 				}
 			}
 		}
+		
+		$debug_info_1 = var_export( $included_files_list, true );
+		$comment_out_debug_info_format_1 = '
+<!-- 
+::Debug info 1 start::
+
+##show_template_file_name_on_top##
+
+%s
+
+::Debug info 1 end::
+-->
+';
+		$this->debug_info[1] = sprintf( $comment_out_debug_info_format_1, $debug_info_1 );
 
 		global $wp_admin_bar;
 		$args = array(
@@ -153,7 +169,25 @@ class Show_Template_File_Name {
 				. '%s'
 				. '</ol>';
 		$included_files_html = sprintf( $included_files_format, $included_files_list );
-		echo wp_kses_post( $included_files_html );
+		
+		$debug_info_2 = var_export( $included_files, true );
+		$comment_out_debug_info_format_2 = '
+<!-- 
+::Debug info 2 start::
+
+##get_included_files_at_footr##
+
+%s
+
+::Debug info 2 end::
+-->
+';
+		$this->debug_info[2] = sprintf( $comment_out_debug_info_format_2, $debug_info_2 );
+		
+		echo $this->debug_info[1];
+		echo $this->debug_info[2];
+//		echo wp_kses_post( $included_files_html );
+		echo $included_files_html;
 	}
 
 	public function add_current_template_stylesheet() {
