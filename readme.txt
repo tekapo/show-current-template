@@ -63,7 +63,7 @@ None so far.
 == Changelog ==
 
 = 0.4.4 =
-* 
+* Fix not showing included files on Windows local. Special thanks to @lindt01 for helping me identify the cause.
 
 = 0.4.3 =
 * Fix the JavaScript error reported by @flexer. Special thanks to @dmchale for the fix!
