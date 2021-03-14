@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.4.4-alpha
+Version: 0.4.4-beta
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -156,7 +156,7 @@ class Show_Template_File_Name {
 		sort( $included_files );
 		$included_files_list = '';
 		foreach ( $included_files as $filename ) {
-			if ( strstr( $filename, 'themes/' ) ) {
+			if ( strstr( $filename, 'themes' . DIRECTORY_SEPARATOR ) ) {
 				$filepath = strstr( $filename, 'themes' );
 				if ( $template_relative_path === $filepath ) {
 					$included_files_list .= '';
@@ -186,8 +186,8 @@ class Show_Template_File_Name {
 		
 		echo $this->debug_info[1];
 		echo $this->debug_info[2];
-//		echo wp_kses_post( $included_files_html );
-		echo $included_files_html;
+		echo wp_kses_post( $included_files_html );
+//		echo $included_files_html;
 	}
 
 	public function add_current_template_stylesheet() {
