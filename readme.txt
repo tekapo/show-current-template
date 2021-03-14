@@ -3,8 +3,8 @@ Contributors: tai
 Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
-Tested up to: 5.6
-Stable tag: 0.4.3
+Tested up to: 5.7
+Stable tag: 0.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Now the plugin work properly? Then it means there may be a compatibility issue b
 None so far.
 
 == Changelog ==
+
+= 0.4.4 =
+* 
 
 = 0.4.3 =
 * Fix the JavaScript error reported by @flexer. Special thanks to @dmchale for the fix!
