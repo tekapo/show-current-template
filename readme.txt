@@ -4,7 +4,7 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.7
-Stable tag: 0.4.4
+Stable tag: 0.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,7 +38,7 @@ Is the Toolbar (Show Toolbar when viewing site) option in your profile page is c
 You can find your profile page is in your WordPress admin -> Users -> Profile.
 
 = I don't see the current template file name in the toolbar. =
-Do you logged in as "Administrator"? Other role users like "Editor" can't see the file name.
+Do you logged in as "Administrator"? Other role users like "Editor" can't see the file name. If your WordPress is multisite, only super admin can see the file name.
 
 = I'dont think this plugin is working properly.
 
@@ -62,8 +62,11 @@ None so far.
 
 == Changelog ==
 
+= 0.4.5 =
+* Fix showing included files at bottom when your WordPress site is multisite and you are a normal admin (not super admin). Special thanks to @dmchale for reporting the issue!
+
 = 0.4.4 =
-* Fix not showing included files on Windows local. Special thanks to @lindt01 for helping me identify the cause.
+* Fix not showing included files on Windows local. Special thanks to @lindt01 for helping me identify the cause!
 
 = 0.4.3 =
 * Fix the JavaScript error reported by @flexer. Special thanks to @dmchale for the fix!
