@@ -5,3 +5,8 @@
 node_modules/
 tests/
 fabfile*
+.phpcs.xml.dist
+.travis.yml
+bin/
+vendor/
+phpunit.xml.dist
