@@ -4,7 +4,7 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.7
-Stable tag: 0.4.5
+Stable tag: 0.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Now the plugin work properly? Then it means there may be a compatibility issue b
 None so far.
 
 == Changelog ==
+
+= 0.4.6 =
+* Fix JS Error when No Admin Bar. Special thanks to @taupecat for reporting the issue!
 
 = 0.4.5 =
 * Fix showing included files at bottom when your WordPress site is multisite and you are a normal admin (not super admin). Special thanks to @dmchale for reporting the issue!
