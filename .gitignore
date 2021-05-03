@@ -10,3 +10,4 @@ fabfile*
 bin/
 vendor/
 phpunit.xml.dist
+.venv/
