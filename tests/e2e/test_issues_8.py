@@ -76,20 +76,11 @@
 #     run(playwright)
 
 from playwright.sync_api import Page
+import pytest
 
 
-# def test_github(page: Page):
-#     page.goto("https://github.com/YusukeIwaki")
-#     assert page.query_selector('text="Yusuke Iwaki"') is not None
-
-
-# def test_example_is_working(page):
-#     page.goto("https://example.com")
-#     assert page.inner_text("h1") == "Example Domain"
-#     page.click("text=More information")
-
-
-def test_not_output_replace_ja(page: Page):
+@pytest.fixture()
+def wp_login(page: Page):
     """
     docstring
     """
@@ -97,11 +88,58 @@ def test_not_output_replace_ja(page: Page):
     page.fill('input[name="log"]', "tai")
     page.fill('input[name="pwd"]', "tai")
     with page.expect_navigation():
-        page.press("#wp-submit", "Enter")
-    assert page.url == "https://wp.plugin.sct.test/wp-admin/"
+        page.click("#wp-submit")
+
+
+@pytest.fixture()
+def uncheck_toolbar(page: Page):
+    """
+    docstring
+    """
+    page.goto("https://wp.plugin.sct.test/wp-admin/profile.php")
+    page.fill('input[name="log"]', "tai")
+    page.fill('input[name="pwd"]', "tai")
+    with page.expect_navigation():
+        page.click("#wp-submit")
+    page.uncheck('input[name="admin_bar_front"]')
+    page.click("#submit")
+
+
+@pytest.fixture()
+def check_toolbar(page: Page):
+    """
+    docstring
+    """
+    page.goto("https://wp.plugin.sct.test/wp-admin/profile.php")
+    page.fill('input[name="log"]', "tai")
+    page.fill('input[name="pwd"]', "tai")
+    with page.expect_navigation():
+        page.click("#wp-submit")
+    page.check('input[name="admin_bar_front"]')
+    page.click("#submit")
+
+
+def test_not_output_replace_js(page: Page, uncheck_toolbar):
+    """
+    replace.jsが出力されていないことを確認する。
+    """
+
     page.hover("#wp-admin-bar-site-name")
     page.click("#wp-admin-bar-view-site a")
-    # page.goto("https://wp.plugin.sct.test/")
-    jsSrc = page.get_attribute("#current-template-js-js", "src")
+    jsSrc = page.query_selector("#current-template-js-js")
+    print("jsSrc::")
     print(jsSrc)
-    # assert page.query_selector("#current-template-js-js")
+    assert jsSrc is None
+
+
+def test_output_replace_js(page: Page, check_toolbar):
+    """
+    replace.jsが出力されていることを確認する。
+    """
+
+    page.hover("#wp-admin-bar-site-name")
+    page.click("#wp-admin-bar-view-site a")
+    jsSrc = page.get_attribute("#current-template-js-js", "src")
+    substring = "show-current-template/assets/js/replace.js"
+    # print(jsSrc)
+    assert substring in jsSrc
