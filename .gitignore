@@ -14,3 +14,4 @@ phpunit.xml.dist
 tests/*
 !e2e/
 __pycache__/
+.playwright-screenshots/
