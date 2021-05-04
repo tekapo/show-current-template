@@ -61,7 +61,10 @@ def test_not_output_replace_js(page: Page, uncheck_toolbar):
 
     page.hover("#wp-admin-bar-site-name")
     page.click("#wp-admin-bar-view-site a")
+    page.wait_for_load_state()
+
     jsSrc = page.query_selector("#current-template-js-js")
+
     print("jsSrc::")
     print(jsSrc)
     assert jsSrc is None
@@ -75,12 +78,18 @@ def test_output_replace_js(page: Page, check_toolbar):
     page.hover("#wp-admin-bar-site-name")
     page.click("#wp-admin-bar-view-site a")
     page.wait_for_load_state()
-    # jsSrc = page.get_attribute("#current-template-js-js", "src")
     # jsSrc = page.query_selector("#current-template-js-js")
-    jsSrc = page.query_selector(".site-footer")
+    jsSrc = page.get_attribute("#current-template-js-js", "src")
+    # jsSrc = page.query_selector(".site-footer")
+    # properties = jsSrc.get_properties()
+    # inner_text = jsSrc.inner_text()
+    # inner_html = jsSrc.inner_html()
 
     print("jsSrc::")
     print(jsSrc)
-    # substring = "show-current-template/assets/js/replace.js"
-    # assert substring in jsSrc
-    assert True
+    # print(properties)
+    # print(inner_text)
+    # print(inner_html)
+    substring = "show-current-template/assets/js/replace.js"
+    assert substring in jsSrc
+    # assert True
