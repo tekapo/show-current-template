@@ -11,3 +11,5 @@ bin/
 vendor/
 phpunit.xml.dist
 .venv/
+.focalfossa/
+.focalfossa/
