@@ -10,3 +10,6 @@ fabfile*
 bin/
 vendor/
 phpunit.xml.dist
+.focalfossa/
+.playwright-screenshots/
+.venv/
