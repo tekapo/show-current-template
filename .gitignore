@@ -13,3 +13,4 @@ phpunit.xml.dist
 .focalfossa/
 .playwright-screenshots/
 .venv/
+*.code-workspace
