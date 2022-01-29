@@ -9,10 +9,21 @@
 
 #wpadminbar {
 	.quicklinks {
-		li#wp-admin-bar-template_relative_path a {
-			display: inline;
-			padding: 0;
+		#wp-admin-bar-show_template_file_name_on_top {
+			a {
+				display: inline;
+				padding: 0;
+				text-decoration: underline;
+			}
 		}
+		p {
+			line-height: 1rem;
+		}
+		// li#wp-admin-bar-template_relative_path a {
+		// 	display: inline;
+		// 	padding: 0;
+		// 	text-decoration: underline;
+		// }
 	}
 	.show-template-name,
 	.hover .show-template-name {

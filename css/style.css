@@ -6,9 +6,13 @@
     Description:
     The stylesheet for the plugin.
 */
-#wpadminbar .quicklinks li#wp-admin-bar-template_relative_path a {
+#wpadminbar .quicklinks #wp-admin-bar-show_template_file_name_on_top a {
   display: inline;
   padding: 0;
+  text-decoration: underline;
+}
+#wpadminbar .quicklinks p {
+  line-height: 1rem;
 }
 #wpadminbar .show-template-name,
 #wpadminbar .hover .show-template-name {

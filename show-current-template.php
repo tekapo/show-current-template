@@ -13,7 +13,7 @@ License:
 Released under the GPL license
 http://www.gnu.org/copyleft/gpl.html
 
-Copyright 2013 (email : tekapo@gmail.com)
+Copyright 2022 (email : tekapo@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.4.6' );
+define( 'WPSCT_VERSION', '0.5.0' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -58,16 +58,29 @@ class Show_Template_File_Name {
 
 		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
 
-		$is_block_theme = wp_is_block_theme();
-
-		// $is_block_theme = false;
-		if ( $is_block_theme ) {
-			$template_file_name = 'This theme is Block Theme';
-			$menu_title         = 'This is Block Theme. You can edit this theme in <a href="' . admin_url( 'site-editor.php' ) . '">Site Editor</a>';
+		if ( wp_is_block_theme() ) {
+			$template_file_name = __( 'This theme is Block Theme.', 'show-current-template' );
+			$site_editor_url    = admin_url( 'site-editor.php' );
+			$block_theme_notice = sprintf(
+				/* translators: The placeholder is a URL. */
+				__(
+					"<p>This is Block Theme. You can edit templates in <a href='%s'>Site Editor</a>.</p>
+				<p>In block themes, it is usually best not to edit the theme's template files.</p>
+				<p>See the <a href='https://developer.wordpress.org/block-editor/getting-started/full-site-editing/'>Full Site Editing</a> page for more information.</p>",
+					'show-current-template'
+				),
+				$site_editor_url
+			);
+			$admin_bar_dropdown_menu = __(
+				"<p>In block themes, it is usually best not to edit the theme's template files.</p>
+			<p>See the <a href='https://developer.wordpress.org/block-editor/getting-started/full-site-editing/'>Full Site Editing</a> page for more information.</p>",
+				'show-current-template'
+			);
 		} else {
-			$template_file_name = basename( $template );
-			$menu_title         = __( 'Template relative path:', 'show-current-template' )
+			$template_file_name      = '<span class="show-template-name">' . basename( $template ) . '</span>';
+			$menu_title              = __( 'Template relative path:', 'show-current-template' )
 			. '<span class="show-template-name"> ' . $template_relative_path . '</span>';
+			$admin_bar_dropdown_menu = '';
 		}
 
 		$current_theme      = wp_get_theme();
@@ -86,61 +99,76 @@ class Show_Template_File_Name {
 					. $current_theme_name . ' (' . __( 'NOT a child theme', 'show-current-template' ) . ')';
 		}
 
-		$included_files = get_included_files();
-
-		sort( $included_files );
-		$included_files_list = '';
-		foreach ( $included_files as $filename ) {
-			if ( strstr( $filename, 'themes' ) ) {
-				$filepath = strstr( $filename, 'themes' );
-				if ( $template_relative_path === $filepath ) {
-					$included_files_list .= '';
-				} else {
-					$included_files_list .= '<li>' . "$filepath" . '</li>';
+		if ( ! wp_is_block_theme() ) {
+			$included_files      = get_included_files();
+			$included_files_list = '';
+			sort( $included_files );
+			foreach ( $included_files as $filename ) {
+				if ( strstr( $filename, 'themes' ) ) {
+					$filepath = strstr( $filename, 'themes' );
+					if ( $template_relative_path === $filepath ) {
+						$included_files_list .= '';
+					} else {
+						$included_files_list .= '<li>' . "$filepath" . '</li>';
+					}
 				}
 			}
+
+			$admin_bar_dropdown_menu = __( 'Also, below template files are included:', 'show-current-template' )
+			. '<br /><ul id="included-files-list">'
+			. $included_files_list
+			. '</ul>';
 		}
 
 		global $wp_admin_bar;
 		$args = array(
 			'id'    => 'show_template_file_name_on_top',
-			'title' => __( 'Template:', 'show-current-template' )
-			. '<span class="show-template-name"> ' . $template_file_name . '</span>',
+			'title' => __( 'Template: ', 'show-current-template' ) . $template_file_name,
 		);
 
 		$wp_admin_bar->add_node( $args );
 
-		$wp_admin_bar->add_menu(
-			array(
-				'parent' => 'show_template_file_name_on_top',
-				'id'     => 'template_relative_path',
-				'title'  => $menu_title,
-			)
-		);
+		if ( wp_is_block_theme() ) {
 
-		$wp_admin_bar->add_menu(
-			array(
-				'parent' => 'show_template_file_name_on_top',
-				'id'     => 'is_child_theme',
-				'title'  => $parent_or_child,
-			)
-		);
+			$wp_admin_bar->add_menu(
+				array(
+					'parent' => 'show_template_file_name_on_top',
+					'id'     => 'template_relative_path',
+					'title'  => $block_theme_notice,
+				)
+			);
 
-		$wp_admin_bar->add_menu(
-			array(
-				'parent' => 'show_template_file_name_on_top',
-				'id'     => 'included_files_path',
-				'title'  => __( 'Also, below template files are included:', 'show-current-template' )
-				. '<br /><ul id="included-files-list">'
-				. $included_files_list
-				. '</ul>',
-			)
-		);
+		} else {
+
+			$wp_admin_bar->add_menu(
+				array(
+					'parent' => 'show_template_file_name_on_top',
+					'id'     => 'template_relative_path',
+					'title'  => $menu_title,
+				)
+			);
+
+			$wp_admin_bar->add_menu(
+				array(
+					'parent' => 'show_template_file_name_on_top',
+					'id'     => 'is_child_theme',
+					'title'  => $parent_or_child,
+				)
+			);
+
+			$wp_admin_bar->add_menu(
+				array(
+					'parent' => 'show_template_file_name_on_top',
+					'id'     => 'included_files_path',
+					'title'  => $admin_bar_dropdown_menu,
+				)
+			);
+		}
 	}
 
 	public function get_included_files_at_footr() {
 
-		if ( is_admin() || ! is_super_admin() ) {
+		if ( is_admin() || ! is_super_admin() || wp_is_block_theme() ) {
 			return;
 		}
 
@@ -189,7 +217,7 @@ class Show_Template_File_Name {
 	}
 	public function add_current_template_js() {
 
-		if ( is_admin() || ! is_super_admin() || ! is_admin_bar_showing() ) {
+		if ( is_admin() || ! is_super_admin() || ! is_admin_bar_showing() || wp_is_block_theme() ) {
 			return;
 		}
 
