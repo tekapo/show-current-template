@@ -1,12 +1,17 @@
-/* 
+/*
     Document   : style.css
     Created on : 2013/01/21, 16:04:46
-    Updated on : 2016/10/17, 18:42
+    Updated on : 2022/01/29, 13:47
     Author     : tai
     Description:
     The stylesheet for the plugin.
 */
-#wpadminbar .show-template-name, #wpadminbar .hover .show-template-name {
+#wpadminbar .quicklinks li#wp-admin-bar-template_relative_path a {
+  display: inline;
+  padding: 0;
+}
+#wpadminbar .show-template-name,
+#wpadminbar .hover .show-template-name {
   font-family: monospace;
   text-shadow: none;
 }

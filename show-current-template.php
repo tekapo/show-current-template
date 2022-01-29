@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.4.6
+Version: 0.5.0
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -37,8 +37,8 @@ load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename
 new Show_Template_File_Name();
 
 class Show_Template_File_Name {
-	
-	public $debug_info = [];
+
+	public $debug_info = array();
 
 	public function __construct() {
 		add_action( 'wp_footer', array( $this, 'get_included_files_at_footr' ) );
@@ -56,8 +56,19 @@ class Show_Template_File_Name {
 
 		global $template;
 
-		$template_file_name     = basename( $template );
 		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
+
+		$is_block_theme = wp_is_block_theme();
+
+		// $is_block_theme = false;
+		if ( $is_block_theme ) {
+			$template_file_name = 'This theme is Block Theme';
+			$menu_title         = 'This is Block Theme. You can edit this theme in <a href="' . admin_url( 'site-editor.php' ) . '">Site Editor</a>';
+		} else {
+			$template_file_name = basename( $template );
+			$menu_title         = __( 'Template relative path:', 'show-current-template' )
+			. '<span class="show-template-name"> ' . $template_relative_path . '</span>';
+		}
 
 		$current_theme      = wp_get_theme();
 		$current_theme_name = $current_theme->Name;
@@ -89,20 +100,6 @@ class Show_Template_File_Name {
 				}
 			}
 		}
-		
-//		$debug_info_1 = var_export( $included_files_list, true );
-//		$comment_out_debug_info_format_1 = '
-//<!-- 
-//::Debug info 1 start::
-//
-//##show_template_file_name_on_top##
-//
-//%s
-//
-//::Debug info 1 end::
-//-->
-//';
-//		$this->debug_info[1] = sprintf( $comment_out_debug_info_format_1, $debug_info_1 );
 
 		global $wp_admin_bar;
 		$args = array(
@@ -117,8 +114,7 @@ class Show_Template_File_Name {
 			array(
 				'parent' => 'show_template_file_name_on_top',
 				'id'     => 'template_relative_path',
-				'title'  => __( 'Template relative path:', 'show-current-template' )
-				. '<span class="show-template-name"> ' . $template_relative_path . '</span>',
+				'title'  => $menu_title,
 			)
 		);
 
@@ -168,24 +164,8 @@ class Show_Template_File_Name {
 		$included_files_format = '<ol id="included-files-fie-on-wp-footer">'
 				. '%s'
 				. '</ol>';
-		$included_files_html = sprintf( $included_files_format, $included_files_list );
-		
-//		$debug_info_2 = var_export( $included_files, true );
-//		$comment_out_debug_info_format_2 = '
-//<!-- 
-//::Debug info 2 start::
-//
-//##get_included_files_at_footr##
-//
-//%s
-//
-//::Debug info 2 end::
-//-->
-//';
-//		$this->debug_info[2] = sprintf( $comment_out_debug_info_format_2, $debug_info_2 );
-		
-//		echo $this->debug_info[1];
-//		echo $this->debug_info[2];
+		$included_files_html   = sprintf( $included_files_format, $included_files_list );
+
 		echo wp_kses_post( $included_files_html );
 	}
 
