@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"phpsab.standard": "WordPress",
+		"phpsab.executablePathCS": "/Users/tai/Dropbox/vhosts-kassad/wpcs/vendor/bin/phpcs",
+		"phpsab.executablePathCBF": "/Users/tai/Dropbox/vhosts-kassad/wpcs/vendor/bin/phpcbf",
+		"cSpell.words": [
+			"showi"
+		]
+	}
+}

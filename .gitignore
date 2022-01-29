@@ -3,15 +3,13 @@
 /nbproject/
 .mypy_cache/
 node_modules/
+tests/
 fabfile*
 .phpcs.xml.dist
 .travis.yml
 bin/
 vendor/
 phpunit.xml.dist
-.venv/
 .focalfossa/
-tests/*
-!e2e/
-__pycache__/
 .playwright-screenshots/
+.venv/
