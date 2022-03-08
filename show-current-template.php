@@ -4,7 +4,8 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.4.6
+Contributors: Ben Rothman
+Version: 0.4.7
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -28,27 +29,31 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ * @category development
+ * @package  Show_Current_Template
+ * @author   JOTAKI Taisuke <tekapo@gmail.com>
+ * @license  GPL
+ * @link     https://ltb.tekapo.com/
  * */
 
-define( 'WPSCT_VERSION', '0.4.6' );
+define( 'WPSCT_VERSION', '0.4.7' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
-new Show_Template_File_Name();
-
-class Show_Template_File_Name {
+class Show_Template_Filename {
 	
 	public $debug_info = [];
 
 	public function __construct() {
-		add_action( 'wp_footer', array( $this, 'get_included_files_at_footr' ) );
 
-		add_action( 'admin_bar_menu', array( &$this, 'show_template_file_name_on_top' ), 9999 );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'add_current_template_stylesheet' ), 9999 );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'add_current_template_js' ), 9999 );
+		add_action( 'admin_bar_menu', [ $this, 'Show_Template_Filename_on_top' ], 9999 );
+        add_action( 'wp_footer', [ $this, 'get_included_files_at_footer' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'add_current_template_stylesheet' ], 9999 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'add_current_template_js' ], 9999 );
+
 	}
 
-	public function show_template_file_name_on_top( $wp_admin_bar ) {
+	public function Show_Template_Filename_on_top( $wp_admin_bar ) {
 
 		if ( is_admin() || ! is_super_admin() ) {
 			return;
@@ -78,6 +83,7 @@ class Show_Template_File_Name {
 		$included_files = get_included_files();
 
 		sort( $included_files );
+
 		$included_files_list = '';
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' ) ) {
@@ -90,23 +96,9 @@ class Show_Template_File_Name {
 			}
 		}
 		
-//		$debug_info_1 = var_export( $included_files_list, true );
-//		$comment_out_debug_info_format_1 = '
-//<!-- 
-//::Debug info 1 start::
-//
-//##show_template_file_name_on_top##
-//
-//%s
-//
-//::Debug info 1 end::
-//-->
-//';
-//		$this->debug_info[1] = sprintf( $comment_out_debug_info_format_1, $debug_info_1 );
-
 		global $wp_admin_bar;
 		$args = array(
-			'id'    => 'show_template_file_name_on_top',
+			'id'    => 'Show_Template_Filename_on_top',
 			'title' => __( 'Template:', 'show-current-template' )
 			. '<span class="show-template-name"> ' . $template_file_name . '</span>',
 		);
@@ -115,7 +107,7 @@ class Show_Template_File_Name {
 
 		$wp_admin_bar->add_menu(
 			array(
-				'parent' => 'show_template_file_name_on_top',
+				'parent' => 'Show_Template_Filename_on_top',
 				'id'     => 'template_relative_path',
 				'title'  => __( 'Template relative path:', 'show-current-template' )
 				. '<span class="show-template-name"> ' . $template_relative_path . '</span>',
@@ -124,7 +116,7 @@ class Show_Template_File_Name {
 
 		$wp_admin_bar->add_menu(
 			array(
-				'parent' => 'show_template_file_name_on_top',
+				'parent' => 'Show_Template_Filename_on_top',
 				'id'     => 'is_child_theme',
 				'title'  => $parent_or_child,
 			)
@@ -132,7 +124,7 @@ class Show_Template_File_Name {
 
 		$wp_admin_bar->add_menu(
 			array(
-				'parent' => 'show_template_file_name_on_top',
+				'parent' => 'Show_Template_Filename_on_top',
 				'id'     => 'included_files_path',
 				'title'  => __( 'Also, below template files are included:', 'show-current-template' )
 				. '<br /><ul id="included-files-list">'
@@ -142,7 +134,7 @@ class Show_Template_File_Name {
 		);
 	}
 
-	public function get_included_files_at_footr() {
+	public function get_included_files_at_footer() {
 
 		if ( is_admin() || ! is_super_admin() ) {
 			return;
@@ -154,6 +146,7 @@ class Show_Template_File_Name {
 		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
 
 		sort( $included_files );
+        
 		$included_files_list = '';
 		foreach ( $included_files as $filename ) {
 			if ( strstr( $filename, 'themes' . DIRECTORY_SEPARATOR ) ) {
@@ -170,22 +163,6 @@ class Show_Template_File_Name {
 				. '</ol>';
 		$included_files_html = sprintf( $included_files_format, $included_files_list );
 		
-//		$debug_info_2 = var_export( $included_files, true );
-//		$comment_out_debug_info_format_2 = '
-//<!-- 
-//::Debug info 2 start::
-//
-//##get_included_files_at_footr##
-//
-//%s
-//
-//::Debug info 2 end::
-//-->
-//';
-//		$this->debug_info[2] = sprintf( $comment_out_debug_info_format_2, $debug_info_2 );
-		
-//		echo $this->debug_info[1];
-//		echo $this->debug_info[2];
 		echo wp_kses_post( $included_files_html );
 	}
 
@@ -224,3 +201,5 @@ class Show_Template_File_Name {
 		}
 	}
 }
+
+new Show_Template_Filename();
