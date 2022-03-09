@@ -1,37 +1,25 @@
 <?php
 /**
-Plugin Name: Show Current Template
-Plugin URI: https://wp.tekapo.com/
-Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
-Author: JOTAKI Taisuke
-Contributors: Ben Rothman
-Version: 0.4.7
-Author URI: https://tekapo.com/
-Text Domain: show-current-template
-Domain Path: /languages/
-
-License:
-Released under the GPL license
-http://www.gnu.org/copyleft/gpl.html
-
-Copyright 2013 (email : tekapo@gmail.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ * Show Current Template
+ *
+ * @package     Show_Current_Template
+ * @author      JOTAKI Taisuke + Ben Rothman
+ * @copyright   2022 JOTAKI Taisuke
+ * @license     GPL-2.0+
+ *
+ * @wordpress-plugin
+ * Plugin Name: Show Current Template
+ * Plugin URI: https://wp.tekapo.com/
+ * Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
+ * Author: JOTAKI Taisuke + Ben Rothman
+ * Version: 0.5.0
+ * Author URI: https://tekapo.com/
+ * Text Domain: show-current-template
+ * Domain Path: /languages/
+ * License: Released under the GPL license
  * */
 
-define( 'WPSCT_VERSION', '0.4.7' );
+define( 'WPSCT_VERSION', '0.5.0' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -39,32 +27,32 @@ load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename
 	/**
 	 * Class to instantiate the plugin as an object
 	 *
-	 * @since 0.4.7
+	 * @since 0.5.0
 	 */
 class Show_Template_Filename {
 
 	/**
 	 * Constructor: run the code that is the plugin
 	 *
-	 * @since 0.4.7
+	 * @since 0.5.0
 	 */
 	public function __construct() {
 
-		add_action( 'admin_bar_menu', array( $this, 'show_template_filename_on_top' ), 9999 );
-		add_action( 'wp_footer', array( $this, 'get_included_files_at_footer' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_current_template_stylesheet' ), 9999 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_current_template_js' ), 9999 );
+		add_action( 'admin_bar_menu', array( $this, 'wpsct_show_template_filename_on_top' ), 9999 );
+		add_action( 'wp_footer', array( $this, 'wpsct_get_included_files_at_footer' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'wpsct_add_current_template_stylesheet' ), 9999 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'wpsct_add_current_template_js' ), 9999 );
 
 	}
 
 	/**
 	 * Build and add the new menu to the admin bar
 	 *
-	 * @param {Object} $wp_admin_bar global variable to refer to the universal admin bar.
+	 * @param {object} $wp_admin_bar global variable to refer to the universal admin bar.
 	 *
-	 * @since 0.4.7
+	 * @since 0.5.0
 	 */
-	public function show_template_filename_on_top( $wp_admin_bar ) {
+	public function wpsct_show_template_filename_on_top( $wp_admin_bar ) {
 
 		if ( is_admin() || ! is_super_admin() ) {
 			return;
@@ -102,7 +90,7 @@ class Show_Template_Filename {
 				if ( $template_relative_path === $filepath ) {
 					$included_files_list .= '';
 				} else {
-					$included_files_list .= '<li>' . "$filepath" . '</li>';
+					$included_files_list .= '<li>' . $filepath . '</li>';
 				}
 			}
 		}
@@ -148,15 +136,16 @@ class Show_Template_Filename {
 	/**
 	 * Get any files included in the footer
 	 *
-	 * @since 0.4.7
+	 * @since 0.5.0
 	 */
-	public function get_included_files_at_footer() {
+	public function wpsct_get_included_files_at_footer() {
 
 		if ( is_admin() || ! is_super_admin() ) {
 			return;
 		}
 
-		$included_files = get_included_files();
+		$enqueued       = $this->wpsct_print_scripts_styles();
+		$included_files = array_merge( get_included_files(), $enqueued );
 		global $template;
 
 		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
@@ -165,12 +154,22 @@ class Show_Template_Filename {
 
 		$included_files_list = '';
 		foreach ( $included_files as $filename ) {
+
 			if ( strstr( $filename, 'themes' . DIRECTORY_SEPARATOR ) ) {
 				$filepath = strstr( $filename, 'themes' );
+
 				if ( $template_relative_path === $filepath ) {
 					$included_files_list .= '';
 				} else {
-					$included_files_list .= '<li>' . "$filepath" . '</li>';
+					if ( strstr( $filepath, '.css' ) ) {
+						$included_files_list .= '<li style="color: green;">CSS: ' . $filepath . '</li>';
+					} elseif ( strstr( $filepath, '.js' ) ) {
+						$included_files_list .= '<li style="color: orange;">JS: ' . $filepath . '</li>';
+					} elseif ( strstr( $filepath, '.php' ) ) {
+						$included_files_list .= '<li style="color: red;">PHP: ' . $filepath . '</li>';
+					} else {
+						$included_files_list .= '<li>' . $filepath . '</li>';
+					}
 				}
 			}
 		}
@@ -185,9 +184,9 @@ class Show_Template_Filename {
 	/**
 	 * Register and enqueue stylesheets for this plugin
 	 *
-	 * @since 0.4.7
+	 * @since 0.5.0
 	 */
-	public function add_current_template_stylesheet() {
+	public function wpsct_add_current_template_stylesheet() {
 
 		if ( is_admin() || ! is_super_admin() ) {
 			return;
@@ -209,9 +208,9 @@ class Show_Template_Filename {
 	/**
 	 * Register and enqueue scripts for this plugin
 	 *
-	 * @since 0.4.7
+	 * @since 0.5.0
 	 */
-	public function add_current_template_js() {
+	public function wpsct_add_current_template_js() {
 
 		if ( is_admin() || ! is_super_admin() || ! is_admin_bar_showing() ) {
 			return;
@@ -227,6 +226,35 @@ class Show_Template_Filename {
 			return;
 		}
 	}
+
+	/**
+	 * Get all of the enqueued scripts and stylesheets being used on the current page
+	 *
+	 * @since 0.5.0j
+	 */
+	public function wpsct_print_scripts_styles() {
+
+		$result = array();
+
+		// Get all loaded Scripts (js).
+		global $wp_scripts;
+		foreach ( $wp_scripts->queue as $script ) {
+			if ( $wp_scripts->registered[ $script ]->src ) {
+				array_push( $result, $wp_scripts->registered[ $script ]->src );
+			}
+		}
+		// Get all loaded Styles (css).
+		global $wp_styles;
+		foreach ( $wp_styles->queue as $style ) {
+			if ( $wp_styles->registered[ $style ]->src ) {
+				array_push( $result, $wp_styles->registered[ $style ]->src );
+			}
+		}
+
+		return $result;
+	}
+
+
 }
 
-new Show_Template_Filename();
+$obj = new Show_Template_Filename();

@@ -4,13 +4,13 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 5.8
-Stable tag: 0.4.6
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
-A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. If you like this plugin, <a href="https://wp.tekapo.com/is-my-plugin-useful/">you can buy me a coffee! ;-)</a>
+A WordPress plugin which shows the current template filename, the current theme name and included template files in the admin toolbar.
 
 Inspired by (and big thanks to):
 
@@ -33,12 +33,12 @@ Inspired by (and big thanks to):
 
 == Frequently Asked Questions ==
 
-= I don't see the toolbar. =
-Is the Toolbar (Show Toolbar when viewing site) option in your profile page is checked?
-You can find your profile page is in your WordPress admin -> Users -> Profile.
+= I don't see the new part of the admin toolbar, do I have to enable it? =
+The option "Show Toolbar when viewing site" in your user's profile should already be checked off by default, but in case it is not, make sure to check that option.
+You can find your profile page in your WordPress admin -> Users -> Profile.
 
-= I don't see the current template file name in the toolbar. =
-Do you logged in as "Administrator"? Other role users like "Editor" can't see the file name. If your WordPress is multisite, only super admin can see the file name.
+= I don't see the current template file name in the toolbar even though that option is checked.  Where is the plugin data? =
+You must be logged in as "Administrator" to see the plugin in action. Users with other roles like "Editor" can't see the toolbar menu item. If your WordPress uses multisite, only super admins can see the entry in the admin toolbar.
 
 = I'dont think this plugin is working properly.
 
@@ -46,11 +46,11 @@ Please try below:
 
 * Activate one of the default themes.
 
-Now the plugin work properly? Then it means there may be a compatibility issue between your theme and this plugin, so let me know your theme’s name and where I can get it.
+Does the plugin work properly upon activation of the default theme? If the plugin works with a WordPress theme, that shows that there may be a compatibility issue between your theme and this plugin, so please send us your theme’s name and where we can get it.
 
 * Try to stop all plugins other than this plugin.
 
-Now the plugin work properly? Then it means there may be a compatibility issue between one of those other plugins and this plugin, so let me know those plugins names and where I can get them.
+Now the plugin work properly? Then it means there may be a compatibility issue between one of those other plugins and this plugin, so let me know those plugins names and where I can get it so we can potentially fix the issue.
 
 == Screenshots ==
 
@@ -62,11 +62,16 @@ None so far.
 
 == Changelog ==
 
+= 0.5.0 =
+* Added CSS and JS file to the menu
+* Color-coded the different filetypes in the menu
+* Added type prefix to each item in the menu
+
 = 0.4.6 =
 * Fix JS Error when No Admin Bar. Special thanks to @taupecat for reporting the issue!
 
 = 0.4.5 =
-* Fix showing included files at bottom when your WordPress site is multisite and you are a normal admin (not super admin). Special thanks to @dmchale for reporting the issue!
+* Fix showing included files at bottom when your WordPress site in multisite when you are a normal admin (not super admin). Special thanks to @dmchale for reporting the issue!
 
 = 0.4.4 =
 * Fix not showing included files on Windows local. Special thanks to @lindt01 for helping me identify the cause!
