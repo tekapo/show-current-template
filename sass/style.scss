@@ -14,16 +14,20 @@
 				display: inline;
 				padding: 0;
 				text-decoration: underline;
+				line-height: 1rem;
+			}
+			.ab-item {
+				height: auto;
+				white-space: normal;
+			}
+			.ab-sub-wrapper {
+				width: 300px;
 			}
 		}
 		p {
 			line-height: 1rem;
+			margin-bottom: 1rem;
 		}
-		// li#wp-admin-bar-template_relative_path a {
-		// 	display: inline;
-		// 	padding: 0;
-		// 	text-decoration: underline;
-		// }
 	}
 	.show-template-name,
 	.hover .show-template-name {

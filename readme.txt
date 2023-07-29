@@ -3,8 +3,8 @@ Contributors: tai
 Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
-Tested up to: 5.8
-Stable tag: 0.4.6
+Tested up to: 6.3
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,7 +82,7 @@ None so far.
 
 = 0.4.0 =
 * Fix not showing all included files with WordPress version 5.4 or greater.
-* Clean up some code. 
+* Clean up some code.
 
 = 0.3.4 =
 * No functional change at all except the version number in the plugin php file and donation url.

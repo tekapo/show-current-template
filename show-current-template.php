@@ -59,28 +59,22 @@ class Show_Template_File_Name {
 		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
 
 		if ( wp_is_block_theme() ) {
-			$template_file_name = __( 'This theme is Block Theme.', 'show-current-template' );
+			$template_file_name = __( '!!Block Theme!!', 'show-current-template' );
 			$site_editor_url    = admin_url( 'site-editor.php' );
 			$block_theme_notice = sprintf(
 				/* translators: The placeholder is a URL. */
 				__(
-					"<p>This is Block Theme. You can edit templates in <a href='%s'>Site Editor</a>.</p>
-				<p>In block themes, it is usually best not to edit the theme's template files.</p>
-				<p>See the <a href='https://developer.wordpress.org/block-editor/getting-started/full-site-editing/'>Full Site Editing</a> page for more information.</p>",
+					"<p>The theme you're currently using is a block theme. You can modify its templates through the <a href='%s'>Site Editor</a> on your admin page.</p>
+				<p>Generally, it's advisable not to alter the template files of block themes directly.</p>
+				<p>Please refer to the <a href='https://developer.wordpress.org/block-editor/getting-started/full-site-editing/'>Full Site Editing</a> page for further information.</p>",
 					'show-current-template'
 				),
 				$site_editor_url
-			);
-			$admin_bar_dropdown_menu = __(
-				"<p>In block themes, it is usually best not to edit the theme's template files.</p>
-			<p>See the <a href='https://developer.wordpress.org/block-editor/getting-started/full-site-editing/'>Full Site Editing</a> page for more information.</p>",
-				'show-current-template'
 			);
 		} else {
 			$template_file_name      = '<span class="show-template-name">' . basename( $template ) . '</span>';
 			$menu_title              = __( 'Template relative path:', 'show-current-template' )
 			. '<span class="show-template-name"> ' . $template_relative_path . '</span>';
-			$admin_bar_dropdown_menu = '';
 		}
 
 		$current_theme      = wp_get_theme();
