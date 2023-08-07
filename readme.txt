@@ -33,6 +33,9 @@ Inspired by (and big thanks to):
 
 == Frequently Asked Questions ==
 
+= Does this plugin work with block themes? =
+No. This plugin is useless when using block themes.
+
 = I don't see the toolbar. =
 Is the Toolbar (Show Toolbar when viewing site) option in your profile page is checked?
 You can find your profile page is in your WordPress admin -> Users -> Profile.
@@ -61,6 +64,10 @@ Now the plugin work properly? Then it means there may be a compatibility issue b
 None so far.
 
 == Changelog ==
+
+= 0.5.0 =
+* Display a message that this plugin is useless when using block themes.
+* Remove stray languange file. Special thanks to @szepeviktor for reporting the issue!
 
 = 0.4.6 =
 * Fix JS Error when No Admin Bar. Special thanks to @taupecat for reporting the issue!

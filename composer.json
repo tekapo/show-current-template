@@ -1,5 +1,28 @@
 {
-    "require-dev": {
-        "phpunit/phpunit": "^7"
-    }
+	"name": "digitalcube/theme-tests",
+	"description": "This is for WordPress Theme and Plugin Development",
+	"type": "wordpress-theme",
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"phpcompatibility/phpcompatibility-wp": "*",
+		"squizlabs/php_codesniffer": "*",
+		"wp-coding-standards/wpcs": "2.3.0",
+		"wptrt/wpthemereview": "*",
+		"szepeviktor/phpstan-wordpress": "^1.1",
+		"phpunit/phpunit": "^8"
+	},
+	"scripts": {
+		"php-format": "vendor/bin/phpcbf --standard=_tests/tests/phpcs/.phpcs.xml.dist --report-summary --report-source",
+		"php-lint": "vendor/bin/phpcs --standard=_tests/tests/phpcs/.phpcs.xml.dist",
+		"phpstan": "vendor/bin/phpstan analyse -c _tests/tests/phpstan/phpstan.neon --memory-limit=1G",
+		"test": [
+			"@lint-php",
+			"@phpstan"
+		]
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
 }
