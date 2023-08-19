@@ -4,7 +4,7 @@ Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
 Tested up to: 6.3
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Now the plugin work properly? Then it means there may be a compatibility issue b
 None so far.
 
 == Changelog ==
+
+= 0.5.1 =
+* Delete unnecessary files.
 
 = 0.5.0 =
 * Display a message that this plugin is useless when using block themes.
