@@ -3,8 +3,8 @@ Contributors: tai
 Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 3.5
-Tested up to: 5.8
-Stable tag: 0.4.6
+Tested up to: 6.3
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ Inspired by (and big thanks to):
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
+
+= Does this plugin work with block themes? =
+No. This plugin is useless when using block themes.
 
 = I don't see the toolbar. =
 Is the Toolbar (Show Toolbar when viewing site) option in your profile page is checked?
@@ -62,6 +65,10 @@ None so far.
 
 == Changelog ==
 
+= 0.5.0 =
+* Display a message that this plugin is useless when using block themes.
+* Remove stray languange file. Special thanks to @szepeviktor for reporting the issue!
+
 = 0.4.6 =
 * Fix JS Error when No Admin Bar. Special thanks to @taupecat for reporting the issue!
 
@@ -82,7 +89,7 @@ None so far.
 
 = 0.4.0 =
 * Fix not showing all included files with WordPress version 5.4 or greater.
-* Clean up some code. 
+* Clean up some code.
 
 = 0.3.4 =
 * No functional change at all except the version number in the plugin php file and donation url.

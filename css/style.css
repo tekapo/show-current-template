@@ -1,12 +1,30 @@
-/* 
+/*
     Document   : style.css
     Created on : 2013/01/21, 16:04:46
-    Updated on : 2016/10/17, 18:42
+    Updated on : 2022/01/29, 13:47
     Author     : tai
     Description:
     The stylesheet for the plugin.
 */
-#wpadminbar .show-template-name, #wpadminbar .hover .show-template-name {
+#wpadminbar .quicklinks #wp-admin-bar-show_template_file_name_on_top a {
+  display: inline;
+  padding: 0;
+  text-decoration: underline;
+  line-height: 1rem;
+}
+#wpadminbar .quicklinks #wp-admin-bar-show_template_file_name_on_top .ab-item {
+  height: auto;
+  white-space: normal;
+}
+#wpadminbar .quicklinks #wp-admin-bar-show_template_file_name_on_top .ab-sub-wrapper {
+  width: 300px;
+}
+#wpadminbar .quicklinks p {
+  line-height: 1rem;
+  margin-bottom: 1rem;
+}
+#wpadminbar .show-template-name,
+#wpadminbar .hover .show-template-name {
   font-family: monospace;
   text-shadow: none;
 }
