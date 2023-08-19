@@ -2,7 +2,7 @@
 Contributors: tai
 Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
-Requires at least: 3.5
+Requires at least: 4.0
 Tested up to: 6.3
 Stable tag: 0.5.1
 License: GPLv2 or later
