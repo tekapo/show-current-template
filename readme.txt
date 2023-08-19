@@ -34,7 +34,7 @@ Inspired by (and big thanks to):
 == Frequently Asked Questions ==
 
 = Does this plugin work with block themes? =
-No. This plugin is useless when using block themes.
+No. This plugin is useless when using block themes, and it shows a message that this plugin is useless when using block themes.
 
 = I don't see the toolbar. =
 Is the Toolbar (Show Toolbar when viewing site) option in your profile page is checked?
