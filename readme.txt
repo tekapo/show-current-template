@@ -67,7 +67,7 @@ None so far.
 
 = 0.5.0 =
 * Display a message that this plugin is useless when using block themes.
-* Remove stray languange file. Special thanks to @szepeviktor for reporting the issue!
+* Remove stray language file. Special thanks to @szepeviktor for reporting the issue!
 
 = 0.4.6 =
 * Fix JS Error when No Admin Bar. Special thanks to @taupecat for reporting the issue!
