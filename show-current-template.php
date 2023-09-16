@@ -4,7 +4,9 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.5.1
+Version: 0.5.2
+Requires at least: 5.9
+Requires PHP: 7.4
 Author URI: https://tekapo.com/
 Text Domain: show-current-template
 Domain Path: /languages/
@@ -13,7 +15,7 @@ License:
 Released under the GPL license
 http://www.gnu.org/copyleft/gpl.html
 
-Copyright 2022 (email : tekapo@gmail.com)
+Copyright 2023 (email : tekapo@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +32,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.5.0' );
+define( 'WPSCT_VERSION', '0.5.2' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
