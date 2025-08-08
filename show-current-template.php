@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.5.2
+Version: 0.5.3
 Requires at least: 5.9
 Requires PHP: 7.4
 Author URI: https://tekapo.com/
@@ -15,7 +15,7 @@ License:
 Released under the GPL license
 http://www.gnu.org/copyleft/gpl.html
 
-Copyright 2023 (email : tekapo@gmail.com)
+Copyright 2025 (email : tekapo@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.5.2' );
+define( 'WPSCT_VERSION', '0.5.3' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -57,7 +57,7 @@ class Show_Template_File_Name {
 
 		global $template;
 
-		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
+		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template ?? '' );
 
 		if ( wp_is_block_theme() ) {
 			$template_file_name = __( '!!Block Theme!!', 'show-current-template' );
@@ -166,7 +166,7 @@ class Show_Template_File_Name {
 		$included_files = get_included_files();
 		global $template;
 
-		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template );
+		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template ?? '' );
 
 		sort( $included_files );
 		$included_files_list = '';
