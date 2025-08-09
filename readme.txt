@@ -8,6 +8,7 @@ Stable tag: 0.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. 
 
 == Description ==
 A WordPress plugin which shows the current template file name, the current theme name and included template files' name in the tool bar. If you like this plugin, <a href="https://wp.tekapo.com/is-my-plugin-useful/">you can buy me a coffee! ;-)</a>
@@ -43,7 +44,7 @@ You can find your profile page is in your WordPress admin -> Users -> Profile.
 = I don't see the current template file name in the toolbar. =
 Do you logged in as "Administrator"? Other role users like "Editor" can't see the file name. If your WordPress is multisite, only super admin can see the file name.
 
-= I'dont think this plugin is working properly.
+= I don't think this plugin is working properly.
 
 Please try below:
 
