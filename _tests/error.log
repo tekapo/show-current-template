@@ -1,0 +1,17 @@
+ReferenceError: STORAGE_STATE is not defined
+    at Object.<anonymous> (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/playwright.config.ts:31:17)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.f._compile (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/utilsBundleImpl.js:16:994)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.i.<computed>.ut._extensions.<computed> (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/utilsBundleImpl.js:16:1010)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1503:12)
+    at require (node:internal/modules/helpers:152:16)
+    at requireOrImport (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/transform/transform.js:172:20)
+    at requireOrImportDefaultObject (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/common/configLoader.js:83:53)
+    at ConfigLoader.loadConfigFile (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/common/configLoader.js:56:26)
+    at runTests (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/cli.js:120:55)
+    at qr.<anonymous> (/Users/tai/webdev/my-projects/wp.plugin.sct/wp-content/plugins/show-current-template/_tests/node_modules/@playwright/test/lib/cli.js:40:7)

@@ -1,0 +1,8 @@
+includes:
+    - ../../../vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    paths:
+        - ../../../show-current-template.php
+    level: 0
+    phpVersion: 80200
