@@ -14,4 +14,4 @@ phpunit.xml.dist
 .playwright-screenshots/
 .venv/
 *.code-workspace
-_tests/
+
