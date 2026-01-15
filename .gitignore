@@ -15,3 +15,12 @@ phpunit.xml.dist
 .venv/
 *.code-workspace
 
+__pycache__/
+*.pyc
+
+*.log
+
+# Playwright
+_tests/playwright/.auth/
+test-results/
+playwright-report/
