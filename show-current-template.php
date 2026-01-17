@@ -4,7 +4,7 @@ Plugin Name: Show Current Template
 Plugin URI: https://wp.tekapo.com/
 Description: Show the current template file name in the tool bar. <a href="https://wp.tekapo.com/is-my-plugin-useful/">Is this useful for you?</a>
 Author: JOTAKI Taisuke
-Version: 0.5.3
+Version: 0.5.4
 Requires at least: 5.9
 Requires PHP: 7.4
 Author URI: https://tekapo.com/
@@ -15,7 +15,7 @@ License:
 Released under the GPL license
 http://www.gnu.org/copyleft/gpl.html
 
-Copyright 2025 (email : tekapo@gmail.com)
+Copyright 2026 (email : tekapo@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  * */
 
-define( 'WPSCT_VERSION', '0.5.3' );
+define( 'WPSCT_VERSION', '0.5.4' );
 
 load_plugin_textdomain( 'show-current-template', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -79,15 +79,20 @@ class Show_Template_File_Name {
 		}
 
 		$current_theme      = wp_get_theme();
-		$current_theme_name = $current_theme->Name;
+		$current_theme_name = $current_theme->get( 'Name' );
 		$parent_theme_name  = '';
 
 		if ( is_child_theme() ) {
 			$child_theme_name  = __( 'Theme name: ', 'show-current-template' )
 					. $current_theme_name;
-			$parent_theme_name = $current_theme->parent()->Name;
-			$parent_theme_name = ' (' . $parent_theme_name
-					. __( "'s child", 'show-current-template' ) . ')';
+			$parent_theme = $current_theme->parent();
+			if ( $parent_theme ) {
+				$parent_theme_name = $parent_theme->get( 'Name' );
+				$parent_theme_name = ' (' . $parent_theme_name
+						. __( "'s child", 'show-current-template' ) . ')';
+			} else {
+				$parent_theme_name = '';
+			}
 			$parent_or_child   = $child_theme_name . $parent_theme_name;
 		} else {
 			$parent_or_child = __( 'Theme name: ', 'show-current-template' )
