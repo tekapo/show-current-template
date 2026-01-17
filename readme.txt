@@ -3,7 +3,7 @@ Contributors: tai
 Donate link: https://wp.tekapo.com/is-my-plugin-useful/
 Tags: template, toolbar
 Requires at least: 5.9
-Tested up to: 6.8.2
+Tested up to: 6.9
 Stable tag: 0.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -66,8 +66,11 @@ None so far.
 
 == Changelog ==
 
+= 0.5.4 =
+* Fix: Fix PHP Warning. Special thanks to @dieppon for reporting the issue!
+
 = 0.5.3 =
-* Fix: Addressed PHP 8.x deprecation warning for passing null to parameter #3 ($subject) of str_replace(). Special thanks to @dieppon for reporting the issue!
+* Fix: Addressed PHP 8.x deprecation warning for passing null to parameter #3 ($subject) of str_replace(). Special thanks to @rembem for reporting the issue!
 
 = 0.5.2 =
 * Update required WordPress version to 5.9. Special thanks to @dmchale for reporting the issue!
