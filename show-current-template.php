@@ -79,15 +79,20 @@ class Show_Template_File_Name {
 		}
 
 		$current_theme      = wp_get_theme();
-		$current_theme_name = $current_theme->Name;
+		$current_theme_name = $current_theme->get( 'Name' );
 		$parent_theme_name  = '';
 
 		if ( is_child_theme() ) {
 			$child_theme_name  = __( 'Theme name: ', 'show-current-template' )
 					. $current_theme_name;
-			$parent_theme_name = $current_theme->parent()->Name;
-			$parent_theme_name = ' (' . $parent_theme_name
-					. __( "'s child", 'show-current-template' ) . ')';
+			$parent_theme = $current_theme->parent();
+			if ( $parent_theme ) {
+				$parent_theme_name = $parent_theme->get( 'Name' );
+				$parent_theme_name = ' (' . $parent_theme_name
+						. __( "'s child", 'show-current-template' ) . ')';
+			} else {
+				$parent_theme_name = '';
+			}
 			$parent_or_child   = $child_theme_name . $parent_theme_name;
 		} else {
 			$parent_or_child = __( 'Theme name: ', 'show-current-template' )
