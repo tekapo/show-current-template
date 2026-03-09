@@ -1,0 +1,145 @@
+name: WordPress Version Check and Test
+
+on:
+  schedule:
+    # 毎日UTCの0時(日本時間9時)に実行
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch latest WordPress version
+        id: wp_version
+        run: |
+          # WordPress公式APIから最新の安定版バージョン(${major}.${minor})を取得
+          # jqでオファーのリストからresponseがupgradeであり、かつ安定版と見られるものを抽出
+          LATEST_WP=$(curl -s https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[] | select(.response == "upgrade") | .version' | head -n 1)
+          
+          # もしupgradeのリストが空の場合は、最新を取得(latest等)
+          if [ -z "$LATEST_WP" ]; then
+            LATEST_WP=$(curl -s https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[] | select(.response == "latest") | .version' | head -n 1)
+          fi
+          
+          if [ -z "$LATEST_WP" ]; then
+            echo "Error: Failed to fetch the latest WordPress version from API."
+            exit 1
+          fi
+          
+          # major.minorの形式にする（例: 6.5.2 -> 6.5）
+          LATEST_WP_MAJOR_MINOR=$(echo $LATEST_WP | cut -d. -f1,2)
+          echo "latest_version=$LATEST_WP_MAJOR_MINOR" >> $GITHUB_OUTPUT
+          echo "Latest WP Version (major.minor): $LATEST_WP_MAJOR_MINOR"
+
+      - name: Get current Tested up to version
+        id: current_tested
+        run: |
+          # readme.txtから "Tested up to: X.X" の値を抽出
+          CURRENT_TESTED=$(grep -i "Tested up to:" readme.txt | awk -F':' '{print $2}' | tr -d ' ' | tr -d '\r')
+          if [ -z "$CURRENT_TESTED" ]; then
+            echo "Error: Could not extract 'Tested up to' from readme.txt"
+            exit 1
+          fi
+          echo "current_version=$CURRENT_TESTED" >> $GITHUB_OUTPUT
+          echo "Current Tested up to: $CURRENT_TESTED"
+
+      - name: Compare versions
+        id: check_update
+        run: |
+          # 取得した最新バージョンとreadme.txtのバージョンを比較
+          if [ "${{ steps.wp_version.outputs.latest_version }}" != "${{ steps.current_tested.outputs.current_version }}" ]; then
+            echo "New WordPress version detected."
+            echo "has_update=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new WordPress version."
+            echo "has_update=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup PHP
+        if: steps.check_update.outputs.has_update == 'true'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1' # 必要に応じて調整してください
+          coverage: none
+
+      - name: Install Dependencies
+        if: steps.check_update.outputs.has_update == 'true'
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run Tests (Success path)
+        id: run_tests
+        if: steps.check_update.outputs.has_update == 'true'
+        run: |
+          # テストを実行し、結果をログに保存
+          composer test > test_results.log 2>&1
+          echo "test_passed=true" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Update readme.txt (If test passed)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed == 'true'
+        run: |
+          LATEST="${{ steps.wp_version.outputs.latest_version }}"
+          CURRENT="${{ steps.current_tested.outputs.current_version }}"
+          # readme.txtの Tested up to を新しいバージョンに置換
+          sed -i "s/Tested up to: $CURRENT/Tested up to: $LATEST/i" readme.txt
+          # 正常時はログ不要なので削除
+          rm -f test_results.log
+
+      - name: Create Pull Request (Success)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Update Tested up to for WordPress ${{ steps.wp_version.outputs.latest_version }}"
+          title: "Update Tested up to WordPress ${{ steps.wp_version.outputs.latest_version }}"
+          body: |
+            WordPress の新しいバージョン (${{ steps.wp_version.outputs.latest_version }}) がリリースされました。
+            自動テスト (`composer test`) をパスしたため、`readme.txt` の `Tested up to` を更新するPRを作成しました。
+          branch: "update/tested-up-to-${{ steps.wp_version.outputs.latest_version }}"
+          base: main
+
+      - name: Create Failure Log (If test failed)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
+        run: |
+          # 失敗時用のディレクトリを作成してエラーログを保存
+          mkdir -p .github/wp-version-test-failures
+          mv test_results.log .github/wp-version-test-failures/wp-${{ steps.wp_version.outputs.latest_version }}-failure.log
+
+      - name: Create Pull Request (Failure)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Test failure log for WordPress ${{ steps.wp_version.outputs.latest_version }}"
+          title: "WordPress ${{ steps.wp_version.outputs.latest_version }} 互換性の確認と修正依頼"
+          body: |
+            WordPress の新しいバージョン (${{ steps.wp_version.outputs.latest_version }}) がリリースされました。
+            自動テスト (`composer test`) を実行しましたが、**エラーが発生しました**。
+            
+            修正作業用のブランチを作成しました。
+            添付のエラーログ (`.github/wp-version-test-failures/wp-${{ steps.wp_version.outputs.latest_version }}-failure.log`) を確認し、このブランチに修正をコミットしてください。
+            
+            修正完了後、すべてのテストがパスすることを確認してからマージしてください。
+            また、マージ前に `readme.txt` の `Tested up to:` を手動で更新してください。
+          branch: "fix/wp-compat-${{ steps.wp_version.outputs.latest_version }}"
+          base: main
+
+      - name: Notify Discord (Success)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed == 'true'
+        uses: discord-actions/message@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "✅ **WP Version Test Passed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストが成功しました。`Tested up to` の更新PRを確認してください。"
+
+      - name: Notify Discord (Failure)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
+        uses: discord-actions/message@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "❌ **WP Version Test Failed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストでエラーが発生しました。作成されたPRからエラーログを確認し、修正を行ってください。"
