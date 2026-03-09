@@ -129,3 +129,17 @@ jobs:
             また、マージ前に `readme.txt` の `Tested up to:` を手動で更新してください。
           branch: "fix/wp-compat-${{ steps.wp_version.outputs.latest_version }}"
           base: main
+
+      - name: Notify Discord (Success)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed == 'true'
+        uses: discord-actions/message@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "✅ **WP Version Test Passed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストが成功しました。`Tested up to` の更新PRを確認してください。"
+
+      - name: Notify Discord (Failure)
+        if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
+        uses: discord-actions/message@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "❌ **WP Version Test Failed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストでエラーが発生しました。作成されたPRからエラーログを確認し、修正を行ってください。"
