@@ -44,6 +44,10 @@ jobs:
         run: |
           # readme.txtから "Tested up to: X.X" の値を抽出
           CURRENT_TESTED=$(grep -i "Tested up to:" readme.txt | awk -F':' '{print $2}' | tr -d ' ' | tr -d '\r')
+          if [ -z "$CURRENT_TESTED" ]; then
+            echo "Error: Could not extract 'Tested up to' from readme.txt"
+            exit 1
+          fi
           echo "current_version=$CURRENT_TESTED" >> $GITHUB_OUTPUT
           echo "Current Tested up to: $CURRENT_TESTED"
 
@@ -99,7 +103,7 @@ jobs:
             WordPress の新しいバージョン (${{ steps.wp_version.outputs.latest_version }}) がリリースされました。
             自動テスト (`composer test`) をパスしたため、`readme.txt` の `Tested up to` を更新するPRを作成しました。
           branch: "update/tested-up-to-${{ steps.wp_version.outputs.latest_version }}"
-          base: master # 環境に合わせて変更してください（例: main）
+          base: main
 
       - name: Create Failure Log (If test failed)
         if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
@@ -125,4 +129,3 @@ jobs:
             また、マージ前に `readme.txt` の `Tested up to:` を手動で更新してください。
           branch: "fix/wp-compat-${{ steps.wp_version.outputs.latest_version }}"
           base: main
-          
