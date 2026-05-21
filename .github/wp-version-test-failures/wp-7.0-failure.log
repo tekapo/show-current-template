@@ -1,0 +1,4 @@
+You made a reference to a non-existent script @lint-php
+Project config file at path /home/runner/work/show-current-template/show-current-template/_tests/tests/phpstan/phpstan.neon does not exist.
+Script vendor/bin/phpstan analyse -c _tests/tests/phpstan/phpstan.neon --memory-limit=1G handling the phpstan event returned with error code 1
+Script @phpstan was called via test
