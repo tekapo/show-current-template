@@ -139,7 +139,7 @@ jobs:
 
       - name: Notify Discord (Failure)
         if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
-        uses: discord-actions/message@v2
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "❌ **WP Version Test Failed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストでエラーが発生しました。作成されたPRからエラーログを確認し、修正を行ってください。"
+        run: |
+          curl -F 'payload_json={"content": "❌ **WP Version Test Failed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストでエラーが発生しました。エラーログを添付します。"}' \
+            -F "file=@.github/wp-version-test-failures/wp-${{ steps.wp_version.outputs.latest_version }}-failure.log" \
+            "${{ secrets.DISCORD_WEBHOOK }}"
