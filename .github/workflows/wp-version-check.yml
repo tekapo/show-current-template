@@ -6,9 +6,6 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
-
 jobs:
   check-and-test:
     runs-on: ubuntu-latest
@@ -18,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd88b0a94488339599577908b16b5a329 # v5.0.0
 
       - name: Fetch latest WordPress version
         id: wp_version
@@ -68,7 +65,7 @@ jobs:
 
       - name: Setup PHP
         if: steps.check_update.outputs.has_update == 'true'
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # v2.35.5
         with:
           php-version: '8.1' # 必要に応じて調整してください
           coverage: none
@@ -98,7 +95,7 @@ jobs:
 
       - name: Create Pull Request (Success)
         if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           commit-message: "Update Tested up to for WordPress ${{ steps.wp_version.outputs.latest_version }}"
           title: "Update Tested up to WordPress ${{ steps.wp_version.outputs.latest_version }}"
@@ -117,7 +114,7 @@ jobs:
 
       - name: Create Pull Request (Failure)
         if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           commit-message: "Test failure log for WordPress ${{ steps.wp_version.outputs.latest_version }}"
           title: "WordPress ${{ steps.wp_version.outputs.latest_version }} 互換性の確認と修正依頼"
@@ -135,10 +132,10 @@ jobs:
 
       - name: Notify Discord (Success)
         if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed == 'true'
-        uses: discord-actions/message@v2
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "✅ **WP Version Test Passed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストが成功しました。`Tested up to` の更新PRを確認してください。"
+        run: |
+          curl -H "Content-Type: application/json" \
+            -d '{"content": "✅ **WP Version Test Passed**\nWordPress **${{ steps.wp_version.outputs.latest_version }}** への自動テストが成功しました。`Tested up to` の更新PRを確認してください。"}' \
+            "${{ secrets.DISCORD_WEBHOOK }}"
 
       - name: Notify Discord (Failure)
         if: steps.check_update.outputs.has_update == 'true' && steps.run_tests.outputs.test_passed != 'true'
