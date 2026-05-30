@@ -12,11 +12,11 @@
 		"phpunit/phpunit": "^12"
 	},
 	"scripts": {
-		"php-format": "vendor/bin/phpcbf --standard=_tests/tests/phpcs/.phpcs.xml.dist --report-summary --report-source",
-		"php-lint": "vendor/bin/phpcs --standard=_tests/tests/phpcs/.phpcs.xml.dist",
-		"phpstan": "vendor/bin/phpstan analyse -c _tests/tests/phpstan/phpstan.neon --memory-limit=1G",
+		"php-format": "vendor/bin/phpcbf --standard=phpcs.xml.dist --report-summary --report-source",
+		"php-lint": "vendor/bin/phpcs --standard=phpcs.xml.dist",
+		"phpstan": "vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=1G",
 		"test": [
-			"@lint-php",
+			"@php-lint",
 			"@phpstan"
 		]
 	},
