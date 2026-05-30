@@ -9,7 +9,7 @@
 		"wp-coding-standards/wpcs": "2.3.0",
 		"wptrt/wpthemereview": "*",
 		"szepeviktor/phpstan-wordpress": "^1.3",
-		"phpunit/phpunit": "^8"
+		"phpunit/phpunit": "^12"
 	},
 	"scripts": {
 		"php-format": "vendor/bin/phpcbf --standard=_tests/tests/phpcs/.phpcs.xml.dist --report-summary --report-source",
