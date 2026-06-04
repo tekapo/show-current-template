@@ -16,3 +16,4 @@ phpunit.xml.dist
 *.code-workspace
 _tests/
 _memo/
+trunk/phpstan.neon.dist
