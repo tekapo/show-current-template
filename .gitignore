@@ -20,3 +20,4 @@ phpstan.neon.dist
 phpcs.xml.dist
 trunk/phpcs.xml.dist
 trunk/phpstan.neon.dist
+.phpstan.cache/
